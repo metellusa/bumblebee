@@ -1,0 +1,4732 @@
+{
+	"openapi": "3.0.1",
+	"info": {
+		"title": "ms-payments API",
+		"description": "Payment operations",
+		"version": "2.0.4",
+		"x-generation-date": "Tuesday 15 Mrch 2022 13:47",
+		"x-api-id": "18fe7d96-a488-11ec-b909-0242ac120002",
+		"x-upr-pci": true
+	},
+	"tags": [
+		{
+			"name": "transactions"
+		},
+		{
+			"name": "blocked tokens (CRUD)"
+		},
+		{
+			"name": "merchants (CRUD)"
+		},
+		{
+			"name": "merchant terminals (CRUD)"
+		},
+		{
+			"name": "payment-responses (CRUD)"
+		},
+		{
+			"name": "aci (deprecated)"
+		}
+	],
+	"paths": {
+		"/resort-areas/{resort-area-code}/authorize": {
+			"post": {
+				"tags": [
+					"transactions"
+				],
+				"summary": "Authorize transaction",
+				"operationId": "resort_area_authorize",
+				"parameters": [
+					{
+						"$ref": "#/components/parameters/path_resort-area-code"
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/authorize-request"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Request was successful",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/transaction-response"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/standard_400_error"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"$ref": "#/components/schemas/standard_500_error"
+					},
+					"503": {
+						"description": "Service Unvailable",
+						"$ref": "#/components/schemas/standard_503_error"
+					}
+				}
+			}
+		},
+		"/resort-areas/{resort-area-code}/capture": {
+			"post": {
+				"tags": [
+					"transactions"
+				],
+				"summary": "Capture transaction",
+				"operationId": "resort_area_capture",
+				"parameters": [
+					{
+						"$ref": "#/components/parameters/path_resort-area-code"
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/capture-request"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Request was successful",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/transaction-response"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/standard_400_error"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"$ref": "#/components/schemas/standard_500_error"
+					},
+					"503": {
+						"description": "Service Unvailable",
+						"$ref": "#/components/schemas/standard_503_error"
+					}
+				}
+			}
+		},
+		"/resort-areas/{resort-area-code}/payment": {
+			"post": {
+				"tags": [
+					"transactions"
+				],
+				"summary": "Authorize & auto-capture transaction",
+				"operationId": "resort_area_payment",
+				"parameters": [
+					{
+						"$ref": "#/components/parameters/path_resort-area-code"
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/authorize-request"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Request was successful",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/transaction-response"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/standard_400_error"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"$ref": "#/components/schemas/standard_500_error"
+					},
+					"503": {
+						"description": "Service Unvailable",
+						"$ref": "#/components/schemas/standard_503_error"
+					}
+				}
+			}
+		},
+		"/resort-areas/{resort-area-code}/reverse": {
+			"post": {
+				"tags": [
+					"transactions"
+				],
+				"summary": "Reverse transaction",
+				"operationId": "resort_area_reverse",
+				"parameters": [
+					{
+						"$ref": "#/components/parameters/path_resort-area-code"
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/reverse-request"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Request was successful",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/transaction-response"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/standard_400_error"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"$ref": "#/components/schemas/standard_500_error"
+					},
+					"503": {
+						"description": "Service Unvailable",
+						"$ref": "#/components/schemas/standard_503_error"
+					}
+				}
+			}
+		},
+		"/resort-areas/{resort-area-code}/refund": {
+			"post": {
+				"tags": [
+					"transactions"
+				],
+				"summary": "Refund transaction",
+				"operationId": "resort_area_refund",
+				"parameters": [
+					{
+						"$ref": "#/components/parameters/path_resort-area-code"
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/refund-request"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Request was successful",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/transaction-response"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/standard_400_error"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"$ref": "#/components/schemas/standard_500_error"
+					},
+					"503": {
+						"description": "Service Unvailable",
+						"$ref": "#/components/schemas/standard_503_error"
+					}
+				}
+			}
+		},
+		"/resort-areas/{resort-area-code}/credit": {
+			"post": {
+				"x-upr-api": {
+					"corp": "user"
+				},
+				"tags": [
+					"transactions"
+				],
+				"summary": "Credit transaction",
+				"description": "Credits not tied to transaction ids. Example - Galaxy workstations do refunds that are not tied to previous transactions.",
+				"operationId": "resort_area_credit",
+				"parameters": [
+					{
+						"$ref": "#/components/parameters/path_resort-area-code"
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/credit-request"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Request was successful",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/transaction-response"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/standard_400_error"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"$ref": "#/components/schemas/standard_500_error"
+					},
+					"503": {
+						"description": "Service Unvailable",
+						"$ref": "#/components/schemas/standard_503_error"
+					}
+				}
+			}
+		},
+		"/resort-areas/{resort-area-code}/tokenize": {
+			"post": {
+				"tags": [
+					"transactions"
+				],
+				"summary": "Tokenize transaction",
+				"operationId": "resort_area_tokenize",
+				"parameters": [
+					{
+						"$ref": "#/components/parameters/path_resort-area-code"
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/tokenize-request"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Request was successful",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/tokenize-response"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/standard_400_error"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"$ref": "#/components/schemas/standard_500_error"
+					},
+					"503": {
+						"description": "Service Unvailable",
+						"$ref": "#/components/schemas/standard_503_error"
+					}
+				}
+			}
+		},
+		"/resort-areas/{resort-area-code}/preauthorize": {
+			"post": {
+				"tags": [
+					"transactions"
+				],
+				"summary": "Preauthorize transaction",
+				"operationId": "resort_area_zero_authorize",
+				"parameters": [
+					{
+						"$ref": "#/components/parameters/path_resort-area-code"
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/preauthorize-request"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Request was successful",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/preauthorize-response"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/standard_400_error"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"$ref": "#/components/schemas/standard_500_error"
+					},
+					"503": {
+						"description": "Service Unvailable",
+						"$ref": "#/components/schemas/standard_503_error"
+					}
+				}
+			}
+		},
+		"/resort-areas/{resort-area-code}/cardinal-token": {
+			"post": {
+				"tags": [
+					"cardinal"
+				],
+				"summary": "Creates a JWT token for Cardinal",
+				"operationId": "resort_area_cardinal_token",
+				"parameters": [
+					{
+						"$ref": "#/components/parameters/path_resort-area-code"
+					}
+				],
+				"requestBody": {
+					"description": "Creates cardinal token for the order",
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/cardinal-token-request"
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Request was successful",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/cardinal-token-response"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/standard_400_error"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"$ref": "#/components/schemas/standard_500_error"
+					},
+					"503": {
+						"description": "Service Unvailable",
+						"$ref": "#/components/schemas/standard_503_error"
+					}
+				},
+				"x-upr-api": {
+					"public": "app"
+				}
+			}
+		},
+		"/resort-areas/{resort-area-code}/cardinal-3d-secure": {
+			"post": {
+				"tags": [
+					"cardinal"
+				],
+				"summary": "Calls Cardinal to get 3D Secure report for customer transaction",
+				"operationId": "resort_area_cardinal_authenticate",
+				"parameters": [
+					{
+						"$ref": "#/components/parameters/path_resort-area-code"
+					}
+				],
+				"requestBody": {
+					"description": "Request body for Cardinal Fraud Report",
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/cardinal-3d-secure-request"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "Request was successful",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/cardinal-3d-secure-response"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/standard_400_error"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"$ref": "#/components/schemas/standard_500_error"
+					},
+					"503": {
+						"description": "Service Unavailable",
+						"$ref": "#/components/schemas/standard_503_error"
+					}
+				},
+				"x-upr-api": {
+					"public": "app"
+				}
+			}
+		},
+		"/resort-areas/{resort-area-code}/decode-cardinal-3d-secure-jwt": {
+			"post": {
+				"tags": [
+					"cardinal"
+				],
+				"summary": "Calls Cardinal to decode authorization jwt",
+				"operationId": "resort_area_cardinal_decode_jwt",
+				"parameters": [
+					{
+						"$ref": "#/components/parameters/path_resort-area-code"
+					}
+				],
+				"requestBody": {
+					"description": "Request body for Cardinal Decode Jwt",
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/cardinal-decode-jwt-request"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "Request was successful",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/cardinal-3d-secure-response"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/standard_400_error"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"$ref": "#/components/schemas/standard_500_error"
+					},
+					"503": {
+						"description": "Service Unavailable",
+						"$ref": "#/components/schemas/standard_503_error"
+					}
+				},
+				"x-upr-api": {
+					"public": "app"
+				}
+			}
+		},
+		"/blocked-tokens": {
+			"post": {
+				"tags": [
+					"blocked tokens (CRUD)"
+				],
+				"summary": "Create a Blocked Token",
+				"operationId": "post_blocked_tokens",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/blocked-tokens-model"
+							}
+						}
+					}
+				},
+				"responses": {
+					"201": {
+						"description": "Created",
+						"headers": {
+							"X-Location-Id": {
+								"description": "This header returns the unique identifier for the resource that was just created. For hotel stays, this will be the UO order_id, if available. If the hotel stay was created outside the UO booking flow and has no order_id, the header can be dropped from the response",
+								"schema": {
+									"type": "string"
+								}
+							},
+							"Location": {
+								"description": "The Location response header indicates the URL to redirect a page to. In cases of resource creation, it indicates the URL to the newly created resource.",
+								"schema": {
+									"type": "string"
+								}
+							},
+							"Etag": {
+								"description": "identifier for a specific version of a resource. It lets caches be more efficient and save bandwidth",
+								"schema": {
+									"type": "string"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/standard_400_error"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Not Found",
+						"$ref": "#/components/schemas/standard_404_error"
+					},
+					"409": {
+						"description": "Document Conflict",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/standard_409_error"
+								}
+							}
+						}
+					},
+					"422": {
+						"description": "Unprocessable Entity",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/standard_422_error"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"$ref": "#/components/schemas/standard_500_error"
+					},
+					"503": {
+						"description": "Service Unavailable",
+						"$ref": "#/components/schemas/standard_503_error"
+					}
+				},
+				"x-upr-api": {
+					"corp": "user"
+				},
+				"deprecated": false
+			}
+		},
+		"/blocked-tokens/{blocked-token}": {
+			"get": {
+				"tags": [
+					"blocked tokens (CRUD)"
+				],
+				"summary": "Retrieves a Blocked Token",
+				"description": "retrieves a blocked token and its created date if one exists",
+				"operationId": "get_blocked_tokens",
+				"parameters": [
+					{
+						"$ref": "#/components/parameters/path_blocked-token"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Request was successful",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/blocked-tokens-model"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/standard_400_error"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Not Found",
+						"$ref": "#/components/schemas/standard_404_error"
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"$ref": "#/components/schemas/standard_500_error"
+					},
+					"503": {
+						"description": "Service Unavailable",
+						"$ref": "#/components/schemas/standard_503_error"
+					}
+				},
+				"x-upr-api": {
+					"corp": "user"
+				},
+				"deprecated": false
+			},
+			"delete": {
+				"tags": [
+					"blocked tokens (CRUD)"
+				],
+				"summary": "Deletes a Blocked Token",
+				"operationId": "delete_blocked_tokens",
+				"parameters": [
+					{
+						"$ref": "#/components/parameters/path_blocked-token"
+					}
+				],
+				"responses": {
+					"204": {
+						"description": "No Content",
+						"content": {}
+					},
+					"404": {
+						"description": "Not Found",
+						"$ref": "#/components/schemas/standard_404_error"
+					},
+					"409": {
+						"description": "Document Conflict",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/standard_409_error"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"$ref": "#/components/schemas/standard_500_error"
+					},
+					"503": {
+						"description": "Service Unavailable",
+						"$ref": "#/components/schemas/standard_503_error"
+					}
+				},
+				"x-upr-api": {
+					"corp": "user"
+				},
+				"deprecated": false
+			}
+		},
+		"/resort-areas/{resort-area-code}/merchants": {
+			"get": {
+				"tags": [
+					"merchants (CRUD)"
+				],
+				"summary": "Retrieves all merchants",
+				"operationId": "resort_area_get_merchants",
+				"parameters": [
+					{
+						"$ref": "#/components/parameters/path_resort-area-code"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Request was successful",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/merchants-model"
+									}
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"$ref": "#/components/schemas/standard_500_error"
+					},
+					"503": {
+						"description": "Service Unavailable",
+						"$ref": "#/components/schemas/standard_503_error"
+					}
+				},
+				"x-upr-api": {
+					"corp": "user"
+				},
+				"deprecated": false
+			},
+			"post": {
+				"tags": [
+					"merchants (CRUD)"
+				],
+				"summary": "Create a Merchant",
+				"operationId": "resort_area_post_merchants",
+				"parameters": [
+					{
+						"$ref": "#/components/parameters/path_resort-area-code"
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/merchants-post-request"
+							}
+						}
+					}
+				},
+				"responses": {
+					"201": {
+						"description": "Created",
+						"headers": {
+							"X-Location-Id": {
+								"schema": {
+									"type": "string",
+									"description": "This header returns the unique identifier for the resource that was just created.\n"
+								}
+							},
+							"Location": {
+								"schema": {
+									"type": "string",
+									"description": "The Location response header indicates the URL to redirect a page to. In cases of resource creation, it indicates the URL to the newly created resource. Ex: 'Location: /index.html'.  See RFC 7231, section 7.1.2: Location\n"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/standard_400_error"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Not Found",
+						"$ref": "#/components/schemas/standard_404_error"
+					},
+					"409": {
+						"description": "Document Conflict",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/standard_409_error"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"$ref": "#/components/schemas/standard_500_error"
+					},
+					"503": {
+						"description": "Service Unavailable",
+						"$ref": "#/components/schemas/standard_503_error"
+					}
+				},
+				"x-upr-api": {
+					"corp": "user"
+				},
+				"deprecated": false
+			}
+		},
+		"/resort-areas/{resort-area-code}/merchants/{merchant-id}": {
+			"get": {
+				"tags": [
+					"merchants (CRUD)"
+				],
+				"summary": "Retrieves a Merchant",
+				"operationId": "resort_area_get_merchant",
+				"parameters": [
+					{
+						"$ref": "#/components/parameters/path_resort-area-code"
+					},
+					{
+						"$ref": "#/components/parameters/path_merchant-id"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Request was successful",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/merchants-model"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/standard_400_error"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Not Found",
+						"$ref": "#/components/schemas/standard_404_error"
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"$ref": "#/components/schemas/standard_500_error"
+					},
+					"503": {
+						"description": "Service Unavailable",
+						"$ref": "#/components/schemas/standard_503_error"
+					}
+				},
+				"x-upr-api": {
+					"corp": "user"
+				},
+				"deprecated": false
+			},
+			"put": {
+				"tags": [
+					"merchants (CRUD)"
+				],
+				"summary": "Updates a Merchant",
+				"operationId": "resort_area_update_merchant",
+				"parameters": [
+					{
+						"$ref": "#/components/parameters/path_resort-area-code"
+					},
+					{
+						"$ref": "#/components/parameters/path_merchant-id"
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/merchants-put-request"
+							}
+						}
+					}
+				},
+				"responses": {
+					"204": {
+						"description": "No Content",
+						"content": {}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/standard_400_error"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Not Found",
+						"$ref": "#/components/schemas/standard_404_error"
+					},
+					"409": {
+						"description": "Document Conflict",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/standard_409_error"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"$ref": "#/components/schemas/standard_500_error"
+					},
+					"503": {
+						"description": "Service Unavailable",
+						"$ref": "#/components/schemas/standard_503_error"
+					}
+				},
+				"x-upr-api": {
+					"corp": "user"
+				},
+				"deprecated": false
+			},
+			"delete": {
+				"tags": [
+					"merchants (CRUD)"
+				],
+				"summary": "Deletes a Merchant",
+				"operationId": "resort_area_delete_merchant",
+				"parameters": [
+					{
+						"$ref": "#/components/parameters/path_resort-area-code"
+					},
+					{
+						"$ref": "#/components/parameters/path_merchant-id"
+					}
+				],
+				"responses": {
+					"204": {
+						"description": "No Content",
+						"content": {}
+					},
+					"404": {
+						"description": "Not Found",
+						"$ref": "#/components/schemas/standard_404_error"
+					},
+					"409": {
+						"description": "Document Conflict",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/standard_409_error"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"$ref": "#/components/schemas/standard_500_error"
+					},
+					"503": {
+						"description": "Service Unavailable",
+						"$ref": "#/components/schemas/standard_503_error"
+					}
+				},
+				"x-upr-api": {
+					"corp": "user"
+				},
+				"deprecated": false
+			}
+		},
+		"/resort-areas/{resort-area-code}/terminals": {
+			"get": {
+				"tags": [
+					"merchant terminals (CRUD)"
+				],
+				"summary": "Retrieves all terminals",
+				"operationId": "resort_area_get_terminals",
+				"parameters": [
+					{
+						"$ref": "#/components/parameters/path_resort-area-code"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Request was successful",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/terminals-model"
+									}
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"$ref": "#/components/schemas/standard_500_error"
+					},
+					"503": {
+						"description": "Service Unavailable",
+						"$ref": "#/components/schemas/standard_503_error"
+					}
+				},
+				"x-upr-api": {
+					"corp": "user"
+				},
+				"deprecated": false
+			},
+			"post": {
+				"tags": [
+					"merchant terminals (CRUD)"
+				],
+				"summary": "Create a new Terminal",
+				"operationId": "resort_area_post_terminal",
+				"parameters": [
+					{
+						"$ref": "#/components/parameters/path_resort-area-code"
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/terminals-post-request"
+							}
+						}
+					}
+				},
+				"responses": {
+					"201": {
+						"description": "Created",
+						"content": {}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/standard_400_error"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Not Found",
+						"$ref": "#/components/schemas/standard_404_error"
+					},
+					"409": {
+						"description": "Document Conflict",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/standard_409_error"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"$ref": "#/components/schemas/standard_500_error"
+					},
+					"503": {
+						"description": "Service Unavailable",
+						"$ref": "#/components/schemas/standard_503_error"
+					}
+				},
+				"x-upr-api": {
+					"corp": "user"
+				},
+				"deprecated": false
+			}
+		},
+		"/resort-areas/{resort-area-code}/terminals/{terminal-id}": {
+			"get": {
+				"tags": [
+					"merchant terminals (CRUD)"
+				],
+				"summary": "Retrieves a Terminal by terminal id",
+				"operationId": "resort_area_get_terminal",
+				"parameters": [
+					{
+						"$ref": "#/components/parameters/path_resort-area-code"
+					},
+					{
+						"$ref": "#/components/parameters/path_terminal-id"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Request was successful",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/terminals-model"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/standard_400_error"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Not Found",
+						"$ref": "#/components/schemas/standard_404_error"
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"$ref": "#/components/schemas/standard_500_error"
+					},
+					"503": {
+						"description": "Service Unavailable",
+						"$ref": "#/components/schemas/standard_503_error"
+					}
+				},
+				"x-upr-api": {
+					"corp": "user"
+				},
+				"deprecated": false
+			},
+			"put": {
+				"tags": [
+					"merchant terminals (CRUD)"
+				],
+				"summary": "Updates a Terminal by terminals id",
+				"operationId": "resort_area_update_terminal",
+				"parameters": [
+					{
+						"$ref": "#/components/parameters/path_resort-area-code"
+					},
+					{
+						"$ref": "#/components/parameters/path_terminal-id"
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/terminals-put-request"
+							}
+						}
+					}
+				},
+				"responses": {
+					"204": {
+						"description": "No Content",
+						"content": {}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/standard_400_error"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Not Found",
+						"$ref": "#/components/schemas/standard_404_error"
+					},
+					"409": {
+						"description": "Document Conflict",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/standard_409_error"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"$ref": "#/components/schemas/standard_500_error"
+					},
+					"503": {
+						"description": "Service Unavailable",
+						"$ref": "#/components/schemas/standard_503_error"
+					}
+				},
+				"x-upr-api": {
+					"corp": "user"
+				},
+				"deprecated": false
+			},
+			"delete": {
+				"tags": [
+					"merchant terminals (CRUD)"
+				],
+				"summary": "Deletes a Terminal by terminals id",
+				"operationId": "resort_area_delete_terminal",
+				"parameters": [
+					{
+						"$ref": "#/components/parameters/path_resort-area-code"
+					},
+					{
+						"$ref": "#/components/parameters/path_terminal-id"
+					}
+				],
+				"responses": {
+					"204": {
+						"description": "No Content",
+						"content": {}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/standard_400_error"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Not Found",
+						"$ref": "#/components/schemas/standard_404_error"
+					},
+					"409": {
+						"description": "Document Conflict",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/standard_409_error"
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"$ref": "#/components/schemas/standard_500_error"
+					},
+					"503": {
+						"description": "Service Unavailable",
+						"$ref": "#/components/schemas/standard_503_error"
+					}
+				},
+				"x-upr-api": {
+					"corp": "user"
+				},
+				"deprecated": false
+			}
+		},
+		"/aci/auth": {
+			"post": {
+				"tags": [
+					"aci (deprecated)"
+				],
+				"summary": "Authorizes the amount requested for the person indicated.",
+				"description": "When a credit card is processed, the first step in the approval process is AUTHORIZING the amount requested by the business owner.\nNo money is actually moved during this part of the process but an imaginary hold is placed on the credit card, protecting the amount\nof money the consumer spent. The merchant has less than 30 days to complete the process- if a merchant only Authorizes a transaction\nand does not complete the process within the time frame, they will not be paid.\n",
+				"operationId": "aci.authorizeRemote",
+				"requestBody": {
+					"description": "'\nRequired Field   | Description\n---------------- | ----------------\norderId          | OrderId from add to cart. The commerce call should respond with a orderId to use to keep track of the order. (POST /shop/wcs/resources/store/{storeNumberId}/cart)  EX: \"74228900000\"\norderDate        | \"2016-07-22 11:32:00\"\namount           | The amount of the payment. EX: \"2.55\"\ncurrencyCode     | Payment Currency. EX: \"USD\"\naccountNumber    | This is the sample credit card number EX: 4111111111111111\nexpireYear       | YYYY - EX: \"2028\"\nexpireMonth      | MM - EX: \"07\"\ncardSecurityCode | 3 or 4 digit security code,  EX: \"1234\"\nperformAvsCheck  | Perform Address Verification Check - true for US Addresses Only, false for International\nskipSecurityCodeCheck  | Skip CVV check - true for card on file transactions, otherwise false\napikey           | External pointer used to lookup merchant bank information\nmerchantId       | Merchant identifier (supplied by POS) used to get merchant bank info. Used by Tap operation\ntermianlId       | Termianl identifier (supplied by POS) used to get merchant bank info. Used by Tap operation\n**customer**     | The fields of the Customer Object\n- firstName      | First Name\n- lastName       | Last Name\n- address1       | Address\n- city           | City\n- stateProvince  | State / Province\n- postalCode     | Postal Code\n- countryCode    | Country\n- workPhone      | Work Phone\n'\n",
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/deprecated_aciAuthorizeRemoteRequestModel"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "Request was successful",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"statusCode": {
+											"type": "number"
+										},
+										"result": {
+											"required": [
+												"accountNumber",
+												"amount",
+												"authorizationNumber",
+												"cardSecurityIndicator",
+												"currencyCode",
+												"orderDate",
+												"orderId",
+												"paymentType",
+												"paymentTypeDescription",
+												"requestId",
+												"requestTypeCode",
+												"responseCode",
+												"responseDate",
+												"responseDescription",
+												"responseIssuerCode",
+												"responseSecurityCode",
+												"responseSecurityDescription",
+												"responseTime",
+												"status",
+												"statusDescription",
+												"tokenId",
+												"transactionAction",
+												"transactionActionDescription"
+											],
+											"type": "object",
+											"properties": {
+												"accountNumber": {
+													"type": "string"
+												},
+												"transactionAction": {
+													"type": "string"
+												},
+												"transactionActionDescription": {
+													"type": "string"
+												},
+												"amount": {
+													"type": "string"
+												},
+												"cardSecurityIndicator": {
+													"type": "string"
+												},
+												"currencyCode": {
+													"type": "string"
+												},
+												"paymentType": {
+													"type": "string"
+												},
+												"paymentTypeDescription": {
+													"type": "string"
+												},
+												"orderDate": {
+													"type": "string"
+												},
+												"orderId": {
+													"type": "string"
+												},
+												"requestId": {
+													"type": "string"
+												},
+												"requestTypeCode": {
+													"type": "string"
+												},
+												"authorizationNumber": {
+													"type": "string"
+												},
+												"responseCode": {
+													"type": "string"
+												},
+												"responseDescription": {
+													"type": "string"
+												},
+												"responseDate": {
+													"type": "string"
+												},
+												"responseIssuerCode": {
+													"type": "string"
+												},
+												"responseSecurityCode": {
+													"type": "string"
+												},
+												"responseSecurityDescription": {
+													"type": "string"
+												},
+												"responseTime": {
+													"type": "string"
+												},
+												"status": {
+													"type": "string"
+												},
+												"statusDescription": {
+													"type": "string"
+												},
+												"tokenId": {
+													"type": "string"
+												}
+											}
+										}
+									},
+									"example": {
+										"statusCode": 200,
+										"result": {
+											"accountNumber": "XXXXXXXXXXXX1111",
+											"transactionAction": "OA",
+											"transactionActionDescription": "Online Authorization or Fraud Screen",
+											"amount": "1.98",
+											"cardSecurityIndicator": "1",
+											"currencyCode": "USD",
+											"paymentType": "VI",
+											"paymentTypeDescription": "Visa",
+											"orderDate": "2016-07-22 11:32:00",
+											"orderId": "12353",
+											"requestId": "123234343213",
+											"requestTypeCode": "E",
+											"authorizationNumber": "OK2323",
+											"responseCode": "00",
+											"responseDescription": "Approved or completed successfully",
+											"responseDate": "2018-10-08",
+											"responseIssuerCode": "1001234506",
+											"responseSecurityCode": "P",
+											"responseSecurityDescription": "CVV check not carried out",
+											"responseTime": "16:02:08",
+											"status": "APPROVE",
+											"statusDescription": "Approved by Acquirer",
+											"tokenId": "41111234563931111"
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"deprecated": true
+			}
+		},
+		"/aci/capture": {
+			"post": {
+				"tags": [
+					"aci (deprecated)"
+				],
+				"summary": "Posts an ACI capture.",
+				"description": "When the business owner closes out their terminal at the end of the day, the CAPTURE process begins.\nThe money is now on the way to the account of the business owner.\n",
+				"operationId": "aci.captureRemote",
+				"requestBody": {
+					"description": "'\nRequired Field   | Description\n---------------- | ----------------\namount           | The amount to capture. EX: \"48.40\"\napikey           | External pointer used to lookup merchant bank information\nrequestId        | The ID of the request (Comes fromPOST /aci/auth) - EX: \"200012345126\"\n'\n",
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/deprecated_aciCaptureRemoteRequestModel"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "Request was successful",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"statusCode": {
+											"type": "number"
+										},
+										"result": {
+											"required": [
+												"amount",
+												"originalRequestId",
+												"requestId",
+												"status",
+												"statusDescription",
+												"transactionAction",
+												"transactionActionDescription"
+											],
+											"type": "object",
+											"properties": {
+												"transactionAction": {
+													"type": "string"
+												},
+												"transactionActionDescription": {
+													"type": "string"
+												},
+												"amount": {
+													"type": "string"
+												},
+												"originalRequestId": {
+													"type": "string"
+												},
+												"requestId": {
+													"type": "string"
+												},
+												"status": {
+													"type": "string"
+												},
+												"statusDescription": {
+													"type": "string"
+												}
+											}
+										}
+									},
+									"example": {
+										"statusCode": 200,
+										"result": {
+											"transactionAction": "OD",
+											"transactionActionDescription": "Online Deposit",
+											"amount": "1.98",
+											"originalRequestId": "580012345483",
+											"requestId": "150004123459",
+											"status": "ENTFND",
+											"statusDescription": "Request not found"
+										}
+									}
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Missing required parameter",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"statusCode": {
+											"type": "number"
+										},
+										"result": {
+											"type": "string"
+										}
+									},
+									"example": {
+										"statusCode": 400,
+										"result": "<html><head><title>HTTPS</title></head><body>Bad Request</body></html>"
+									}
+								}
+							}
+						}
+					}
+				},
+				"deprecated": true
+			}
+		},
+		"/aci/payment": {
+			"post": {
+				"tags": [
+					"aci (deprecated)"
+				],
+				"summary": "Posts an ACI payment (authorization/auto-capture)",
+				"description": "Invoking this endpoint will perform and authorization / auto capture operation that will immediately start the process of capturing funds for the transaction.",
+				"operationId": "aci.paymentRemote",
+				"requestBody": {
+					"description": "'\nRequired Field   | Description\n---------------- | ----------------\norderId          | OrderId from add to cart. The commerce call should respond with a orderId to use to keep track of the order. (POST /shop/wcs/resources/store/{storeNumberId}/cart)  EX: \"74228900000\"\norderDate        | \"2016-07-22 11:32:00\"\namount           | The amount of the payment. EX: \"2.55\"\ncurrencyCode     | Payment Currency. EX: \"USD\"\naccountNumber    | This is the sample credit card number EX: 4111111111111111\nexpireYear       | YYYY - EX: \"2028\"\nexpireMonth      | MM - EX: \"07\"\ncardSecurityCode | 3 or 4 digit security code,  EX: \"1234\"\nperformAvsCheck  | Perform Address Verification Check - true for US Addresses Only, false for International\nskipSecurityCodeCheck  | Skip CVV check - true for card on file transactions, otherwise false\napikey           | External pointer used to lookup merchant bank information\nmerchantId       | Merchant identifier (supplied by POS) used to get merchant bank info. Used by Tap operation\ntermianlId       | Termianl identifier (supplied by POS) used to get merchant bank info. Used by Tap operation\n**customer**     | The fields of the Customer Object\n- firstName      | First Name\n- lastName       | Last Name\n- address1       | Address\n- city           | City\n- stateProvince  | State / Province\n- postalCode     | Postal Code\n- countryCode    | Country\n- workPhone      | Work Phone\n'\n",
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/deprecated_aciAuthorizeRemoteRequestModel"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "Request was successful",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"statusCode": {
+											"type": "number"
+										},
+										"result": {
+											"required": [
+												"accountNumber",
+												"amount",
+												"authorizationNumber",
+												"cardSecurityIndicator",
+												"currencyCode",
+												"orderDate",
+												"orderId",
+												"paymentType",
+												"paymentTypeDescription",
+												"requestId",
+												"requestTypeCode",
+												"responseCode",
+												"responseDate",
+												"responseDescription",
+												"responseIssuerCode",
+												"responseSecurityCode",
+												"responseSecurityDescription",
+												"responseTime",
+												"status",
+												"statusDescription",
+												"tokenId",
+												"transactionAction",
+												"transactionActionDescription"
+											],
+											"type": "object",
+											"properties": {
+												"accountNumber": {
+													"type": "string"
+												},
+												"transactionAction": {
+													"type": "string"
+												},
+												"transactionActionDescription": {
+													"type": "string"
+												},
+												"amount": {
+													"type": "string"
+												},
+												"cardSecurityIndicator": {
+													"type": "string"
+												},
+												"currencyCode": {
+													"type": "string"
+												},
+												"paymentType": {
+													"type": "string"
+												},
+												"paymentTypeDescription": {
+													"type": "string"
+												},
+												"orderDate": {
+													"type": "string"
+												},
+												"orderId": {
+													"type": "string"
+												},
+												"requestId": {
+													"type": "string"
+												},
+												"requestTypeCode": {
+													"type": "string"
+												},
+												"authorizationNumber": {
+													"type": "string"
+												},
+												"responseCode": {
+													"type": "string"
+												},
+												"responseDescription": {
+													"type": "string"
+												},
+												"responseDate": {
+													"type": "string"
+												},
+												"responseIssuerCode": {
+													"type": "string"
+												},
+												"responseSecurityCode": {
+													"type": "string"
+												},
+												"responseSecurityDescription": {
+													"type": "string"
+												},
+												"responseTime": {
+													"type": "string"
+												},
+												"status": {
+													"type": "string"
+												},
+												"statusDescription": {
+													"type": "string"
+												},
+												"tokenId": {
+													"type": "string"
+												}
+											}
+										}
+									},
+									"example": {
+										"statusCode": 200,
+										"result": {
+											"accountNumber": "XXXXXXXXXXXX1111",
+											"transactionAction": "OA",
+											"transactionActionDescription": "Online Authorization or Fraud Screen",
+											"amount": "1.98",
+											"cardSecurityIndicator": "1",
+											"currencyCode": "USD",
+											"paymentType": "VI",
+											"paymentTypeDescription": "Visa",
+											"orderDate": "2016-07-22 11:32:00",
+											"orderId": "12353",
+											"requestId": "123234343213",
+											"requestTypeCode": "E",
+											"authorizationNumber": "OK2323",
+											"responseCode": "00",
+											"responseDescription": "Approved or completed successfully",
+											"responseDate": "2018-10-08",
+											"responseIssuerCode": "1001234506",
+											"responseSecurityCode": "P",
+											"responseSecurityDescription": "CVV check not carried out",
+											"responseTime": "16:02:08",
+											"status": "APPROVE",
+											"statusDescription": "Approved by Acquirer",
+											"tokenId": "41111234563931111"
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"deprecated": true
+			}
+		},
+		"/aci/refund": {
+			"post": {
+				"tags": [
+					"aci (deprecated)"
+				],
+				"summary": "Undoes the posting of a ACI payment.",
+				"operationId": "aci.refundRemote",
+				"requestBody": {
+					"description": "'\nRequired Field          | Description\n----------------------- |------------\namount                  | The amount to refund. EX: \"1.80\"\napikey                  | Hardcoded value for APIKey - EX: \"425a6904-5440-45f8-b902-6dcc355cc95b\"\nrequestId               | The ID of the request (Comes fromPOST /aci/auth) - EX: \"200012345126\"\nsameDay                 | If this is the same day the purchase was made or not:  EX: true\n'\n",
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/deprecated_aciRefundRemoteRequestModel"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "Request was successful",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"statusCode": {
+											"type": "number",
+											"example": 200
+										},
+										"result": {
+											"required": [
+												"accountNumber",
+												"amount",
+												"authorizationNumber",
+												"currencyCode",
+												"orderId",
+												"originalAmount",
+												"paymentType",
+												"paymentTypeDescription",
+												"requestId",
+												"requestTypeCode",
+												"responseCode",
+												"responseDate",
+												"responseDescription",
+												"responseIssuerCode",
+												"responseTime",
+												"status",
+												"statusDescription",
+												"tokenId",
+												"transactionAction",
+												"transactionActionDescription"
+											],
+											"type": "object",
+											"properties": {
+												"accountNumber": {
+													"type": "string",
+													"example": "XXXXXXXXXXXX1111"
+												},
+												"transactionAction": {
+													"type": "string",
+													"example": "OX"
+												},
+												"transactionActionDescription": {
+													"type": "string",
+													"example": "Linked Refund (Same Day)"
+												},
+												"amount": {
+													"type": "string",
+													"example": "1.98"
+												},
+												"currencyCode": {
+													"type": "string",
+													"example": "USD"
+												},
+												"paymentType": {
+													"type": "string",
+													"example": "VI"
+												},
+												"paymentTypeDescription": {
+													"type": "string",
+													"example": "Visa"
+												},
+												"orderId": {
+													"type": "string",
+													"example": "12345832731"
+												},
+												"originalAmount": {
+													"type": "string",
+													"example": "1.98"
+												},
+												"requestId": {
+													"type": "string",
+													"example": "150011857425"
+												},
+												"requestTypeCode": {
+													"type": "string",
+													"example": "E"
+												},
+												"authorizationNumber": {
+													"type": "string",
+													"example": "OK8751"
+												},
+												"responseCode": {
+													"type": "string",
+													"example": "00"
+												},
+												"responseDescription": {
+													"type": "string",
+													"example": "Approved or completed successfully"
+												},
+												"responseDate": {
+													"type": "string",
+													"example": "2022-12-24"
+												},
+												"responseIssuerCode": {
+													"type": "string",
+													"example": "0224184748"
+												},
+												"responseTime": {
+													"type": "string",
+													"example": "16:02:08"
+												},
+												"status": {
+													"type": "string",
+													"example": "REVERSE"
+												},
+												"statusDescription": {
+													"type": "string",
+													"example": "Reversed"
+												},
+												"tokenId": {
+													"type": "string",
+													"example": "4111113233931111"
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Missing required parameter",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"statusCode": {
+											"type": "number"
+										},
+										"result": {
+											"type": "string"
+										}
+									},
+									"example": {
+										"statusCode": 400,
+										"result": "<html><head><title>HTTPS</title></head><body>Bad Request</body></html>"
+									}
+								}
+							}
+						}
+					}
+				},
+				"deprecated": true
+			}
+		},
+		"/aci/tokenize": {
+			"post": {
+				"tags": [
+					"aci (deprecated)"
+				],
+				"operationId": "aci.tokenizeRemote",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/deprecated_tokenize-request-model"
+							}
+						}
+					},
+					"required": false
+				},
+				"responses": {
+					"200": {
+						"description": "Request was successful",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"status": {
+											"type": "number",
+											"format": "double",
+											"example": 200
+										},
+										"result": {
+											"$ref": "#/components/schemas/deprecated_tokenize-response-model"
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"deprecated": true
+			}
+		},
+		"/guests/{guest-id}/preauthorize-card": {
+			"post": {
+				"tags": [
+					"aci (deprecated)"
+				],
+				"summary": "Preauthorize card with payment service",
+				"operationId": "preauthorizeCard",
+				"parameters": [
+					{
+						"$ref": "#/components/parameters/path_guest-id"
+					}
+				],
+				"requestBody": {
+					"description": "<b>PreAuthorization Response Model</b>\n* account_number - optional, used when authorizing PAN\n* token - optional, used when authorizing TOKEN\n* expire_year - required\n* expire_month - required\n* card_security_code - required\n* Additional Rules\n  - If both account_number and token supplied, result is 400 Bad Request\n  - If neither account_number or token supplied, result is 400 Bad Request\n",
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/preauthorize-card-request"
+							}
+						}
+					},
+					"required": false
+				},
+				"responses": {
+					"200": {
+						"description": "Request was successful",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"token": {
+											"type": "string",
+											"example": "4111113233931111"
+										},
+										"issuer_code": {
+											"type": "string",
+											"example": "VI"
+										}
+									}
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request - A request parameter is invalid.",
+						"headers": {
+							"Content-Type": {
+								"description": "The Content-Type entity header is used to indicate the media type of the resource. For errors the Content-Type should be 'application/problem+json'\n",
+								"schema": {
+									"type": "string"
+								}
+							}
+						},
+						"content": {
+							"application/json": {
+								"schema": {
+									"required": [
+										"title"
+									],
+									"type": "object",
+									"properties": {
+										"detail": {
+											"type": "string",
+											"description": "A human-readable explanation specific to this occurrence of the problem.",
+											"example": "Invalid user input"
+										},
+										"instance": {
+											"type": "string",
+											"description": "A URI reference that identifies the specific occurrence of the problem. It may or may not yield further information if dereferenced.",
+											"format": "uri"
+										},
+										"invalid_parms": {
+											"minItems": 0,
+											"type": "array",
+											"description": "A list of exceptions for the operation by field.",
+											"readOnly": true,
+											"items": {
+												"type": "string",
+												"example": "coordinate"
+											}
+										},
+										"problem": {
+											"type": "string",
+											"description": "The uniquely identifiable (primary key) value of the problem that has occurred; the computer readable version of the problem.",
+											"example": "validation-error",
+											"enum": [
+												"validation-error"
+											]
+										},
+										"title": {
+											"type": "string",
+											"description": "A short, human-readable summary of the problem type. It SHOULD NOT change from occurrence to occurrence of the problem, except for purposes of localization (e.g., using proactive content negotiation; see [RFC7231], Section 3.4).",
+											"example": "Your request parameters did not validate"
+										},
+										"type": {
+											"type": "string",
+											"description": "A URI reference [RFC3986] that identifies the problem type. This specification encourages that, when dereferenced, it provide human-readable documentation for the  problem type (e.g., using HTML [W3C.REC-html5-20141028]). When this member is not present, its value is assumed to be \"about:blank\".",
+											"format": "uri",
+											"example": "https://services.use.ucdp.net/carts/validation-error",
+											"default": "about:blank"
+										}
+									}
+								}
+							}
+						}
+					},
+					"500": {
+						"description": "Internal Server Error - A generic error indication for an unexpected server execution problem. This usually indicates an error in the service itself.",
+						"content": {}
+					},
+					"503": {
+						"description": "Service Unavailable - Service is (temporarily) not available (e.g. if a required component or downstream service is not available) — client retry may be sensible.",
+						"content": {}
+					}
+				},
+				"x-upr-api": {
+					"public": "user"
+				},
+				"deprecated": true
+			}
+		},
+		"/cardinal/token": {
+			"post": {
+				"tags": [
+					"cardinal"
+				],
+				"summary": "creates a JWT token for Cardinal",
+				"operationId": "/cardinal/token",
+				"requestBody": {
+					"description": "orderId (required) - The commerce call should respond with a orderId to use to keep track of the order.\nComes from WCS - (POST /shop/wcs/resources/store/{storeNumberId}/cart) - This call creates a cardinal token for that order.",
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/deprecated_cardinalTokenRequestModel"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "Request was successful",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"token": {
+											"type": "string"
+										},
+										"statusCode": {
+											"type": "number"
+										}
+									},
+									"example": {
+										"token": "eyJhbGciOiJI.3RyaLCJ8b1BmJ0..........",
+										"statusCode": 200
+									}
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Missing required parameter",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"message": {
+											"type": "string"
+										},
+										"stack": {
+											"type": "string"
+										},
+										"isJoi": {
+											"type": "boolean"
+										},
+										"name": {
+											"type": "string"
+										},
+										"details": {
+											"type": "array",
+											"items": {
+												"type": "object",
+												"properties": {
+													"message": {
+														"type": "string"
+													},
+													"path": {
+														"type": "array",
+														"items": {
+															"type": "string"
+														}
+													},
+													"type": {
+														"type": "string"
+													},
+													"context": {
+														"type": "object",
+														"properties": {
+															"key": {
+																"type": "string"
+															},
+															"label": {
+																"type": "string"
+															}
+														}
+													}
+												}
+											}
+										},
+										"_object": {
+											"type": "object",
+											"properties": {}
+										}
+									},
+									"example": {
+										"message": "child \"orderId\" fails because [\"orderId\" is required]",
+										"stack": "ValidationError: child \"orderId\" fails because [\"orderId\" is required]\n    at Object.exports.process (/home/paymentusr/p406api/node_modules/joi/lib/errors.js:196:19)\n    at _validateWithOptions (/home/paymentusr/p406api/node_modules/joi/lib/types/any/index.js:670:31)\nat /home/paymentusr/p406api/node_modules/express/lib/router/index.js:284:7",
+										"isJoi": true,
+										"name": "ValidationError",
+										"details": [
+											{
+												"message": "\"orderId\" is required",
+												"path": [
+													"orderId"
+												],
+												"type": "any.required",
+												"context": {
+													"key": "orderId",
+													"label": "orderId"
+												}
+											}
+										],
+										"_object": {}
+									}
+								}
+							}
+						}
+					}
+				},
+				"x-upr-api": {
+					"public": "app"
+				},
+				"deprecated": true
+			}
+		},
+		"/payment-responses": {
+			"get": {
+				"tags": [
+					"payment-responses (CRUD)"
+				],
+				"summary": "Search for Payment Response(s)",
+				"operationId": "paymentResponses.findRemote",
+				"parameters": [
+					{
+						"name": "request_id",
+						"in": "query",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "customer_order_id",
+						"in": "query",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "limit",
+						"in": "query",
+						"schema": {
+							"type": "number"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Request was successful",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"result": {
+											"type": "array",
+											"items": {
+												"$ref": "#/components/schemas/payment-response-model"
+											}
+										}
+									}
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/standard_400_error"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Not Found",
+						"$ref": "#/components/schemas/standard_404_error"
+					},
+					"500": {
+						"description": "Internal Server Error",
+						"$ref": "#/components/schemas/standard_500_error"
+					},
+					"503": {
+						"description": "Service Unavailable",
+						"$ref": "#/components/schemas/standard_503_error"
+					}
+				},
+				"deprecated": false
+			},
+			"post": {
+				"tags": [
+					"payment-responses (CRUD)"
+				],
+				"summary": "Create Payment Response",
+				"operationId": "paymentResponses.createRemote",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/payment-response-model"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"201": {
+						"description": "Created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"result": {
+											"$ref": "#/components/schemas/payment-response-model"
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"deprecated": false
+			}
+		},
+		"/payment-responses/{payment-response-id}": {
+			"get": {
+				"tags": [
+					"payment-responses (CRUD)"
+				],
+				"summary": "Retrieves a PaymentResonse by id",
+				"operationId": "paymentresponses.getByIdRemote",
+				"parameters": [
+					{
+						"name": "payment-response-id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Request was successful",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"result": {
+											"$ref": "#/components/schemas/payment-response-model"
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"deprecated": false
+			},
+			"put": {
+				"tags": [
+					"payment-responses (CRUD)"
+				],
+				"summary": "Updates a PaymentResponse",
+				"operationId": "paymentresponses.updateRemote",
+				"parameters": [
+					{
+						"name": "payment-response-id",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/payment-response-model"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"204": {
+						"description": "No Content",
+						"content": {}
+					}
+				},
+				"deprecated": false
+			}
+		}
+	},
+	"components": {
+		"schemas": {
+			"payon-payment-request": {
+				"type": "object",
+				"properties": {
+					"payment_type": {
+						"$ref": "#/components/schemas/payon-defs/properties/payment_type"
+					},
+					"amount": {
+						"$ref": "#/components/schemas/payon-defs/properties/amount"
+					},
+					"currency": {
+						"$ref": "#/components/schemas/payon-defs/properties/currency"
+					},
+					"merchant_transaction_id": {
+						"$ref": "#/components/schemas/payon-defs/properties/merchant_transaction_id"
+					},
+					"payment_brand": {
+						"$ref": "#/components/schemas/payon-defs/properties/payment_brand"
+					},
+					"card_number": {
+						"$ref": "#/components/schemas/payon-defs/properties/card_number"
+					},
+					"expiry_month": {
+						"$ref": "#/components/schemas/payon-defs/properties/expiry_month"
+					},
+					"expiry_year": {
+						"$ref": "#/components/schemas/payon-defs/properties/expiry_year"
+					},
+					"cvv": {
+						"$ref": "#/components/schemas/payon-defs/properties/cvv"
+					},
+					"first_name": {
+						"$ref": "#/components/schemas/payon-defs/properties/first_name"
+					},
+					"last_name": {
+						"$ref": "#/components/schemas/payon-defs/properties/last_name"
+					},
+					"address1": {
+						"$ref": "#/components/schemas/payon-defs/properties/address1"
+					},
+					"city": {
+						"$ref": "#/components/schemas/payon-defs/properties/city"
+					},
+					"state": {
+						"$ref": "#/components/schemas/payon-defs/properties/state"
+					},
+					"postal_code": {
+						"$ref": "#/components/schemas/payon-defs/properties/postal_code"
+					},
+					"country_code": {
+						"$ref": "#/components/schemas/payon-defs/properties/country_code"
+					},
+					"phone": {
+						"$ref": "#/components/schemas/payon-defs/properties/phone"
+					},
+					"create_token": {
+						"$ref": "#/components/schemas/payon-defs/properties/create_token"
+					},
+					"merchant_id": {
+						"$ref": "#/components/schemas/payon-defs/properties/merchant_id"
+					},
+					"terminal_id": {
+						"$ref": "#/components/schemas/payon-defs/properties/terminal_id"
+					},
+					"merchant_category_code": {
+						"$ref": "#/components/schemas/payon-defs/properties/merchant_category_code"
+					},
+					"card_on_file": {
+						"type": "object",
+						"properties": {
+							"type": {
+								"$ref": "#/components/schemas/card-on-file-type"
+							},
+							"mode": {
+								"$ref": "#/components/schemas/card-on-file-mode"
+							},
+							"source": {
+								"$ref": "#/components/schemas/card-on-file-source"
+							},
+							"initial_transaction_id": {
+								"$ref": "#/components/schemas/card-on-file-initial-transaction-id"
+							},
+							"industry_practice": {
+								"$ref": "#/components/schemas/card-on-file-industry-practice"
+							},
+							"expiry": {
+								"$ref": "#/components/schemas/card-on-file-expiry"
+							},
+							"frequency": {
+								"$ref": "#/components/schemas/card-on-file-frequency"
+							},
+							"number_of_installments": {
+								"$ref": "#/components/schemas/card-on-file-number-of-installments"
+							}
+						}
+					}
+				}
+			},
+			"payon-tokens-request": {
+				"type": "object",
+				"properties": {
+					"payment_brand": {
+						"$ref": "#/components/schemas/payon-defs/properties/payment_brand"
+					},
+					"card_number": {
+						"$ref": "#/components/schemas/payon-defs/properties/card_number"
+					},
+					"first_name": {
+						"$ref": "#/components/schemas/payon-defs/properties/first_name"
+					},
+					"last_name": {
+						"$ref": "#/components/schemas/payon-defs/properties/last_name"
+					},
+					"expiry_month": {
+						"$ref": "#/components/schemas/payon-defs/properties/expiry_month"
+					},
+					"expiry_year": {
+						"$ref": "#/components/schemas/payon-defs/properties/expiry_year"
+					},
+					"cvv": {
+						"$ref": "#/components/schemas/payon-defs/properties/cvv"
+					}
+				}
+			},
+			"payon-linked-request": {
+				"type": "object",
+				"properties": {
+					"payment_type": {
+						"$ref": "#/components/schemas/payon-defs/properties/payment_linked_type"
+					},
+					"amount": {
+						"$ref": "#/components/schemas/payon-defs/properties/amount"
+					},
+					"currency": {
+						"$ref": "#/components/schemas/payon-defs/properties/currency"
+					}
+				}
+			},
+			"payon-tokens-payment-request": {
+				"type": "object",
+				"properties": {
+					"amount": {
+						"$ref": "#/components/schemas/payon-defs/properties/amount"
+					},
+					"currency": {
+						"$ref": "#/components/schemas/payon-defs/properties/currency"
+					},
+					"merchant_transaction_id": {
+						"$ref": "#/components/schemas/payon-defs/properties/merchant_transaction_id"
+					},
+					"payment_type": {
+						"$ref": "#/components/schemas/payon-defs/properties/payment_type"
+					},
+					"payment_brand": {
+						"$ref": "#/components/schemas/payon-defs/properties/payment_brand"
+					},
+					"expiry_month": {
+						"$ref": "#/components/schemas/payon-defs/properties/expiry_month"
+					},
+					"expiry_year": {
+						"$ref": "#/components/schemas/payon-defs/properties/expiry_year"
+					},
+					"merchant_id": {
+						"$ref": "#/components/schemas/payon-defs/properties/merchant_id"
+					},
+					"terminal_id": {
+						"$ref": "#/components/schemas/payon-defs/properties/terminal_id"
+					},
+					"merchant_category_code": {
+						"$ref": "#/components/schemas/payon-defs/properties/merchant_category_code"
+					},
+					"card_on_file": {
+						"type": "object",
+						"properties": {
+							"type": {
+								"$ref": "#/components/schemas/card-on-file-type"
+							},
+							"mode": {
+								"$ref": "#/components/schemas/card-on-file-mode"
+							},
+							"source": {
+								"$ref": "#/components/schemas/card-on-file-source"
+							},
+							"initial_transaction_id": {
+								"$ref": "#/components/schemas/card-on-file-initial-transaction-id"
+							},
+							"industry_practice": {
+								"$ref": "#/components/schemas/card-on-file-industry-practice"
+							},
+							"expiry": {
+								"$ref": "#/components/schemas/card-on-file-expiry"
+							},
+							"frequency": {
+								"$ref": "#/components/schemas/card-on-file-frequency"
+							},
+							"number_of_installments": {
+								"$ref": "#/components/schemas/card-on-file-number-of-installments"
+							}
+						}
+					}
+				}
+			},
+			"payon-defs": {
+				"properties": {
+					"payment_type": {
+						"type": "string",
+						"enum": [
+							"DB",
+							"CD",
+							"PA"
+						],
+						"example": "DB"
+					},
+					"payment_linked_type": {
+						"type": "string",
+						"enum": [
+							"CP",
+							"RF",
+							"RV"
+						],
+						"example": "RV"
+					},
+					"amount": {
+						"type": "string",
+						"example": "92.00"
+					},
+					"currency": {
+						"type": "string",
+						"example": "USD"
+					},
+					"payment_brand": {
+						"type": "string",
+						"enum": [
+							"AMEX",
+							"DINERS",
+							"DISCOVER",
+							"JCB",
+							"MASTER",
+							"VISA"
+						],
+						"example": "VISA"
+					},
+					"card_number": {
+						"type": "string",
+						"example": "4111111111111111"
+					},
+					"expiry_month": {
+						"type": "string",
+						"example": "05"
+					},
+					"expiry_year": {
+						"type": "string",
+						"example": "2034"
+					},
+					"cvv": {
+						"type": "string",
+						"example": "123"
+					},
+					"first_name": {
+						"type": "string",
+						"example": "Jane"
+					},
+					"last_name": {
+						"type": "string",
+						"example": "Jones"
+					},
+					"address1": {
+						"type": "string",
+						"example": "123 Main St"
+					},
+					"city": {
+						"type": "string",
+						"example": "Orlando"
+					},
+					"state": {
+						"type": "string",
+						"example": "FL"
+					},
+					"postal_code": {
+						"type": "string",
+						"example": "32819"
+					},
+					"country_code": {
+						"type": "string",
+						"example": "US"
+					},
+					"merchant_transaction_id": {
+						"type": "string",
+						"example": "U01234589012"
+					},
+					"phone": {
+						"type": "string",
+						"example": "4072221212"
+					},
+					"payment_id": {
+						"type": "string",
+						"example": "8ac7a4a1778185a801778264d78a2383"
+					},
+					"token": {
+						"type": "string",
+						"example": "8ac7a4a1778185a801778264d78a2383"
+					},
+					"create_token": {
+						"type": "boolean",
+						"example": true
+					},
+					"merchant_id": {
+						"type": "string",
+						"example": "372787652885"
+					},
+					"terminal_id": {
+						"type": "string",
+						"example": "01360457"
+					},
+					"merchant_category_code": {
+						"type": "string",
+						"example": "7996"
+					}
+				}
+			},
+			"authorize-request": {
+				"required": [
+					"order_id",
+					"order_date",
+					"amount",
+					"currency_code",
+					"merchant_info",
+					"source",
+					"payment_card"
+				],
+				"type": "object",
+				"properties": {
+					"order_id": {
+						"$ref": "#/components/schemas/order-id"
+					},
+					"order_date": {
+						"$ref": "#/components/schemas/order-date"
+					},
+					"amount": {
+						"$ref": "#/components/schemas/transaction-amount"
+					},
+					"currency_code": {
+						"$ref": "#/components/schemas/currency-code"
+					},
+					"merchant_info": {
+						"type": "object",
+						"properties": {
+							"apikey": {
+								"$ref": "#/components/schemas/api-key"
+							},
+							"merchant_id": {
+								"$ref": "#/components/schemas/merchant-id"
+							},
+							"store_id": {
+								"$ref": "#/components/schemas/store-id"
+							},
+							"terminal_id": {
+								"$ref": "#/components/schemas/terminal-id"
+							}
+						}
+					},
+					"payment_card": {
+						"required": [
+							"first_name_on_card",
+							"last_name_on_card",
+							"billing_address",
+							"expiration"
+						],
+						"type": "object",
+						"properties": {
+							"billing_address": {
+								"required": [
+									"address_line1",
+									"address_line2",
+									"city",
+									"state",
+									"postal_code",
+									"country_code"
+								],
+								"type": "object",
+								"properties": {
+									"address_line1": {
+										"$ref": "#/components/schemas/address-line1"
+									},
+									"address_line2": {
+										"$ref": "#/components/schemas/address-line2"
+									},
+									"city": {
+										"$ref": "#/components/schemas/city"
+									},
+									"state": {
+										"$ref": "#/components/schemas/state"
+									},
+									"postal_code": {
+										"$ref": "#/components/schemas/postal-code"
+									},
+									"country_code": {
+										"$ref": "#/components/schemas/country-code"
+									}
+								}
+							},
+							"cvv": {
+								"$ref": "#/components/schemas/cvv"
+							},
+							"expiration": {
+								"required": [
+									"month",
+									"year"
+								],
+								"type": "object",
+								"properties": {
+									"month": {
+										"$ref": "#/components/schemas/expire-month"
+									},
+									"year": {
+										"$ref": "#/components/schemas/expire-year"
+									}
+								}
+							},
+							"first_name_on_card": {
+								"$ref": "#/components/schemas/first-name-on-card"
+							},
+							"last_name_on_card": {
+								"$ref": "#/components/schemas/last-name-on-card"
+							},
+							"phone_number": {
+								"$ref": "#/components/schemas/phone-number"
+							},
+							"number": {
+								"$ref": "#/components/schemas/payment-account-number"
+							},
+							"token": {
+								"$ref": "#/components/schemas/token"
+							}
+						}
+					},
+					"order_details": {
+						"type": "object",
+						"properties": {
+							"channel": {
+								"$ref": "#/components/schemas/channel"
+							},
+							"email_address": {
+								"$ref": "#/components/schemas/email-address"
+							},
+							"guest_id": {
+								"$ref": "#/components/schemas/guest-id"
+							},
+							"instance_id": {
+								"$ref": "#/components/schemas/instance-id"
+							},
+							"ipaddress": {
+								"$ref": "#/components/schemas/ipaddress"
+							},
+							"source": {
+								"$ref": "#/components/schemas/source"
+							},
+							"system_order_id": {
+								"$ref": "#/components/schemas/system-order-id"
+							},
+							"user_id": {
+								"$ref": "#/components/schemas/user-id"
+							}
+						}
+					},
+					"card_on_file": {
+						"type": "object",
+						"properties": {
+							"type": {
+								"$ref": "#/components/schemas/card-on-file-type"
+							},
+							"mode": {
+								"$ref": "#/components/schemas/card-on-file-mode"
+							},
+							"source": {
+								"$ref": "#/components/schemas/card-on-file-source"
+							},
+							"initial_transaction_id": {
+								"$ref": "#/components/schemas/card-on-file-initial-transaction-id"
+							},
+							"industry_practice": {
+								"$ref": "#/components/schemas/card-on-file-industry-practice"
+							},
+							"expiry": {
+								"$ref": "#/components/schemas/card-on-file-expiry"
+							},
+							"frequency": {
+								"$ref": "#/components/schemas/card-on-file-frequency"
+							},
+							"number_of_installments": {
+								"$ref": "#/components/schemas/card-on-file-number-of-installments"
+							}
+						}
+					},
+					"3d_secure": {
+						"$ref": "#/components/schemas/cardinal-3d-secure-response"
+					}
+				}
+			},
+			"capture-request": {
+				"required": [
+					"amount",
+					"currency_code",
+					"request_id"
+				],
+				"type": "object",
+				"properties": {
+					"amount": {
+						"$ref": "#/components/schemas/transaction-amount"
+					},
+					"currency_code": {
+						"$ref": "#/components/schemas/currency-code"
+					},
+					"request_id": {
+						"$ref": "#/components/schemas/request-id"
+					}
+				}
+			},
+			"reverse-request": {
+				"required": [
+					"request_id"
+				],
+				"type": "object",
+				"properties": {
+					"request_id": {
+						"$ref": "#/components/schemas/request-id"
+					}
+				}
+			},
+			"refund-request": {
+				"required": [
+					"request_id"
+				],
+				"type": "object",
+				"properties": {
+					"request_id": {
+						"$ref": "#/components/schemas/request-id"
+					},
+					"amount": {
+						"$ref": "#/components/schemas/transaction-amount"
+					},
+					"currency_code": {
+						"$ref": "#/components/schemas/currency-code"
+					}
+				}
+			},
+			"credit-request": {
+				"type": "object",
+				"properties": {
+					"amount": {
+						"$ref": "#/components/schemas/transaction-amount"
+					},
+					"currency_code": {
+						"$ref": "#/components/schemas/currency-code"
+					}
+				}
+			},
+			"tokenize-request": {
+				"required": [
+					"expiration",
+					"number"
+				],
+				"type": "object",
+				"properties": {
+					"number": {
+						"$ref": "#/components/schemas/payment-account-number"
+					},
+					"curency_code": {
+						"$ref": "#/components/schemas/currency-code"
+					},
+					"expiration": {
+						"required": [
+							"month",
+							"year"
+						],
+						"type": "object",
+						"properties": {
+							"month": {
+								"$ref": "#/components/schemas/expire-month"
+							},
+							"year": {
+								"$ref": "#/components/schemas/expire-year"
+							}
+						}
+					},
+					"first_name_on_card": {
+						"$ref": "#/components/schemas/first-name-on-card"
+					},
+					"last_name_on_card": {
+						"$ref": "#/components/schemas/last-name-on-card"
+					}
+				}
+			},
+			"tokenize-response": {
+				"type": "object",
+				"properties": {
+					"token": {
+						"$ref": "#/components/schemas/token"
+					}
+				}
+			},
+			"preauthorize-request": {
+				"required": [
+					"apikey",
+					"payment_card"
+				],
+				"type": "object",
+				"properties": {
+					"apikey": {
+						"$ref": "#/components/schemas/api-key"
+					},
+					"guest_id": {
+						"$ref": "#/components/schemas/guest-id"
+					},
+					"payment_card": {
+						"required": [
+							"first_name_on_card",
+							"last_name_on_card",
+							"billing_address",
+							"expiration"
+						],
+						"type": "object",
+						"properties": {
+							"billing_address": {
+								"required": [
+									"address_line1",
+									"address_line2",
+									"city",
+									"state",
+									"postal_code",
+									"country_code"
+								],
+								"type": "object",
+								"properties": {
+									"address_line1": {
+										"$ref": "#/components/schemas/address-line1"
+									},
+									"address_line2": {
+										"$ref": "#/components/schemas/address-line2"
+									},
+									"city": {
+										"$ref": "#/components/schemas/city"
+									},
+									"state": {
+										"$ref": "#/components/schemas/state"
+									},
+									"postal_code": {
+										"$ref": "#/components/schemas/postal-code"
+									},
+									"country_code": {
+										"$ref": "#/components/schemas/country-code"
+									}
+								}
+							},
+							"cvv": {
+								"$ref": "#/components/schemas/cvv"
+							},
+							"expiration": {
+								"required": [
+									"month",
+									"year"
+								],
+								"type": "object",
+								"properties": {
+									"month": {
+										"$ref": "#/components/schemas/expire-month"
+									},
+									"year": {
+										"$ref": "#/components/schemas/expire-year"
+									}
+								}
+							},
+							"first_name_on_card": {
+								"$ref": "#/components/schemas/first-name-on-card"
+							},
+							"last_name_on_card": {
+								"$ref": "#/components/schemas/last-name-on-card"
+							},
+							"phone_number": {
+								"$ref": "#/components/schemas/phone-number"
+							},
+							"number": {
+								"$ref": "#/components/schemas/payment-account-number"
+							},
+							"token": {
+								"$ref": "#/components/schemas/token"
+							}
+						}
+					}
+				}
+			},
+			"preauthorize-response": {
+				"type": "object",
+				"properties": {
+					"token": {
+						"$ref": "#/components/schemas/token"
+					},
+					"issuer_code": {
+						"$ref": "#/components/schemas/payment-type"
+					}
+				}
+			},
+			"cardinal-3d-secure-request": {
+				"type": "object",
+				"properties": {
+					"cardinal": {
+						"type": "object",
+						"properties": {
+							"reference_id": {
+								"type": "string"
+							},
+							"window_size": {
+								"type": "number"
+							}
+						}
+					},
+					"contact": {
+						"type": "object",
+						"properties": {
+							"first_name": {
+								"type": "string"
+							},
+							"last_name": {
+								"type": "string"
+							},
+							"address1": {
+								"type": "string"
+							},
+							"city": {
+								"type": "string"
+							},
+							"state": {
+								"type": "string"
+							},
+							"postal_code": {
+								"type": "string"
+							},
+							"country_code": {
+								"type": "string"
+							},
+							"email": {
+								"type": "string"
+							},
+							"phone": {
+								"type": "string"
+							}
+						}
+					},
+					"order": {
+						"type": "object",
+						"properties": {
+							"order_number": {
+								"type": "string"
+							},
+							"order_amount": {
+								"type": "string"
+							},
+							"currency_code": {
+								"type": "string"
+							},
+							"order_items": {
+								"type": "array",
+								"items": {
+									"type": "object",
+									"properties": {
+										"name": {
+											"type": "string"
+										},
+										"price": {
+											"type": "number"
+										},
+										"quantity": {
+											"type": "number"
+										},
+										"sku": {
+											"type": "string"
+										}
+									}
+								}
+							}
+						}
+					},
+					"payment_card": {
+						"type": "object",
+						"properties": {
+							"card_number": {
+								"type": "string"
+							},
+							"exp_month": {
+								"type": "string"
+							},
+							"exp_year": {
+								"type": "string"
+							}
+						}
+					}
+				}
+			},
+			"cardinal-3d-secure-response": {
+				"type": "object",
+				"properties": {
+					"acs_url": {
+						"type": "string",
+						"example": ""
+					},
+					"authentication_path": {
+						"type": "string",
+						"example": "ATTEMPTS_COMPLETE"
+					},
+					"card_bin": {
+						"type": "string",
+						"example": "511165"
+					},
+					"card_brand": {
+						"type": "string",
+						"example": "MASTERCARD"
+					},
+					"cavv": {
+						"type": "string",
+						"example": "hp/5moVOS+ZOYwAAhuI6BlkAAAA="
+					},
+					"eci_flag": {
+						"$ref": "#/components/schemas/3ds-eci-flag"
+					},
+					"enrolled": {
+						"type": "string",
+						"example": "Y"
+					},
+					"error_desc": {
+						"type": "string",
+						"example": ""
+					},
+					"error_no": {
+						"type": "string",
+						"example": "0"
+					},
+					"order_id": {
+						"type": "string",
+						"example": "8010094990791117"
+					},
+					"payload": {
+						"type": "string",
+						"example": ""
+					},
+					"three_ds_version": {
+						"type": "string",
+						"example": "1.0.2"
+					},
+					"transaction_id": {
+						"$ref": "#/components/schemas/3ds-transaction-id"
+					},
+					"xid": {
+						"$ref": "#/components/schemas/3ds-xid"
+					},
+					"cavv_algorithm": {
+						"$ref": "#/components/schemas/3ds-cavv"
+					},
+					"par_es_status": {
+						"type": "string",
+						"example": "A"
+					},
+					"signature_verification": {
+						"type": "string",
+						"example": "Y"
+					},
+					"ucaf_indicator": {
+						"type": "string",
+						"example": "1"
+					}
+				}
+			},
+			"cardinal-token-request": {
+				"type": "object",
+				"properties": {
+					"order_id": {
+						"$ref": "#/components/schemas/order-id"
+					}
+				}
+			},
+			"cardinal-token-response": {
+				"type": "object",
+				"properties": {
+					"token": {
+						"$ref": "#/components/schemas/cardinal-token"
+					}
+				}
+			},
+			"cardinal-decode-jwt-request": {
+				"type": "object",
+				"properties": {
+					"jwt": {
+						"type": "string"
+					}
+				}
+			},
+			"blocked-tokens-model": {
+				"type": "object",
+				"properties": {
+					"token": {
+						"$ref": "#/components/schemas/token"
+					},
+					"created_date": {
+						"$ref": "#/components/schemas/created-date"
+					}
+				},
+				"required": [
+					"token"
+				]
+			},
+			"merchants-model": {
+				"type": "object",
+				"properties": {
+					"resort_area_code": {
+						"type": "string",
+						"example": "UOR"
+					},
+					"apikey": {
+						"type": "string",
+						"example": "mobileFoodOrdering_603"
+					},
+					"default_terminal_id": {
+						"type": "string",
+						"example": "04863879"
+					},
+					"merchant_category_code": {
+						"type": "string",
+						"example": "5812"
+					},
+					"merchant_id": {
+						"type": "string",
+						"example": "372798144880"
+					},
+					"merchant_name": {
+						"type": "string",
+						"example": "BAMBU MOBILE 603"
+					}
+				},
+				"required": [
+					"default_terminal_id",
+					"resort_area_code",
+					"merchant_category_code",
+					"merchant_id",
+					"merchant_name"
+				]
+			},
+			"payment-response-model": {
+				"type": "object",
+				"properties": {
+					"addressId": {
+						"type": "string",
+						"example": "58441768907542"
+					},
+					"addressLine": {
+						"type": "array",
+						"items": {
+							"type": "string",
+							"example": "207 Third St"
+						}
+					},
+					"cardAccountNumber": {
+						"type": "string",
+						"example": "XXXXXXXXXXXX5259"
+					},
+					"cardExpirationDate": {
+						"type": "string",
+						"example": "42021"
+					},
+					"city": {
+						"type": "string",
+						"example": "Saint Joe"
+					},
+					"country": {
+						"type": "string",
+						"example": "US"
+					},
+					"countryCode": {
+						"type": "string",
+						"example": "840"
+					},
+					"createdDate": {
+						"type": "string",
+						"example": "2022-12-20T15:47:29.291Z"
+					},
+					"customerOrderId": {
+						"type": "string",
+						"example": "U02352588"
+					},
+					"docType": {
+						"type": "string",
+						"example": "PaymentResponse"
+					},
+					"email1": {
+						"type": "string",
+						"example": "a.k.a.snyder@gmail.com"
+					},
+					"externalUserId": {
+						"type": "string",
+						"example": "4581cd01-356e-11e9-8878-3dc9672b3be4"
+					},
+					"firstName": {
+						"type": "string",
+						"example": "Angela"
+					},
+					"fraudReport": {
+						"type": "object",
+						"properties": {
+							"ACSUrl": {
+								"type": "string",
+								"example": ""
+							},
+							"AuthenticationPath": {
+								"type": "string",
+								"example": "NOREDIRECT"
+							},
+							"CardBin": {
+								"type": "string",
+								"example": "403216"
+							},
+							"CardBrand": {
+								"type": "string",
+								"example": "VISA"
+							},
+							"EciFlag": {
+								"type": "string",
+								"example": "07"
+							},
+							"Enrolled": {
+								"type": "string",
+								"example": "B"
+							},
+							"ErrorDesc": {
+								"type": "string",
+								"example": ""
+							},
+							"ErrorNo": {
+								"type": "string",
+								"example": "0"
+							},
+							"OrderId": {
+								"type": "string",
+								"example": "8000006023610496"
+							},
+							"Payload": {
+								"type": "string",
+								"example": ""
+							},
+							"ThreeDSVersion": {
+								"type": "string",
+								"example": "1.0.2"
+							},
+							"TransactionId": {
+								"type": "string",
+								"example": "pSf39eUDF6ZD8EXZXsn0"
+							}
+						}
+					},
+					"ipAddress": {
+						"type": "string",
+						"example": "2604:2d80:9c85:a700:9c29:7d6:4b9e:a87c"
+					},
+					"lastName": {
+						"type": "string",
+						"example": "Snyder"
+					},
+					"methodOfPaymentTypeCode": {
+						"type": "string",
+						"example": "VI"
+					},
+					"orderAmount": {
+						"type": "string",
+						"example": "1885.02"
+					},
+					"orderId": {
+						"type": "string",
+						"example": "9695562551001"
+					},
+					"paymentResponseId": {
+						"type": "string",
+						"example": "e86dad7cc4bcda3a26650064c46b78fc"
+					},
+					"phone1": {
+						"type": "string",
+						"example": "2609085758"
+					},
+					"requestId": {
+						"type": "string",
+						"example": "100047116022"
+					},
+					"requestTypeCode": {
+						"type": "string",
+						"example": "E"
+					},
+					"responseAuthorizationNumber": {
+						"type": "string",
+						"example": "018747"
+					},
+					"responseAvsCode": {
+						"type": "string",
+						"example": "Y"
+					},
+					"responseCode": {
+						"type": "string",
+						"example": "00"
+					},
+					"responseDate": {
+						"type": "string",
+						"example": "2020-02-20 10:47:29"
+					},
+					"responseIssuerCode": {
+						"type": "string",
+						"example": "0220154728"
+					},
+					"responseSecCode": {
+						"type": "string",
+						"example": "M"
+					},
+					"state": {
+						"type": "string",
+						"example": "IN"
+					},
+					"statusCode": {
+						"type": "string",
+						"example": "APPROVE"
+					},
+					"subType": {
+						"type": "string",
+						"example": "ACI_OA",
+						"enum": [
+							"ACI_OA",
+							"ACI_OC",
+							"ACI_OD",
+							"ACI_OX",
+							"ACI_OR"
+						]
+					},
+					"tokenId": {
+						"type": "string",
+						"example": "4032163584705259"
+					},
+					"userId": {
+						"type": "string",
+						"example": "57378147"
+					},
+					"verificationCode": {
+						"type": "string",
+						"example": "1"
+					},
+					"zipCode": {
+						"type": "string",
+						"example": "46785"
+					},
+					"merchant_info": {
+						"type": "object",
+						"properties": {
+							"apikey": {
+								"$ref": "#/components/schemas/api-key"
+							},
+							"merchant_id": {
+								"$ref": "#/components/schemas/merchant-id"
+							},
+							"store_id": {
+								"$ref": "#/components/schemas/store-id"
+							},
+							"terminal_id": {
+								"$ref": "#/components/schemas/terminal-id"
+							}
+						}
+					}
+				}
+			},
+			"terminals-model": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"example": "c64a82fde73d96c17211012e32d79da9"
+					},
+					"store_id": {
+						"type": "string",
+						"example": "615"
+					},
+					"terminal_id": {
+						"type": "string",
+						"example": "01070371"
+					},
+					"terminal_number": {
+						"type": "string",
+						"example": "123"
+					},
+					"merchant_id": {
+						"type": "string",
+						"example": "372798144880"
+					},
+					"merchant_category_code": {
+						"type": "string",
+						"example": "5812"
+					},
+					"merchant_name": {
+						"type": "string",
+						"example": "MMIS UNIVERSAL QA TEST 5"
+					},
+					"resort_area_code": {
+						"type": "string",
+						"example": "UOR"
+					}
+				}
+			},
+			"transaction-response": {
+				"type": "object",
+				"properties": {
+					"account_number": {
+						"$ref": "#/components/schemas/payment-account-number"
+					},
+					"amount": {
+						"$ref": "#/components/schemas/transaction-amount"
+					},
+					"authorization_number": {
+						"$ref": "#/components/schemas/authorization-number"
+					},
+					"card_security_indicator": {
+						"$ref": "#/components/schemas/card-security-indicator"
+					},
+					"currency_code": {
+						"$ref": "#/components/schemas/currency-code"
+					},
+					"merchant_category_code": {
+						"$ref": "#/components/schemas/merchant-category-code"
+					},
+					"merchant_id": {
+						"$ref": "#/components/schemas/merchant-id"
+					},
+					"order_date": {
+						"$ref": "#/components/schemas/order-date"
+					},
+					"order_id": {
+						"$ref": "#/components/schemas/order-id"
+					},
+					"payment_type": {
+						"$ref": "#/components/schemas/payment-type"
+					},
+					"request_id": {
+						"$ref": "#/components/schemas/request-id"
+					},
+					"request_type_code": {
+						"$ref": "#/components/schemas/request-type-code"
+					},
+					"response_avs_code": {
+						"$ref": "#/components/schemas/response-avs-code"
+					},
+					"response_code": {
+						"$ref": "#/components/schemas/response-code"
+					},
+					"response_code_external_sytem": {
+						"$ref": "#/components/schemas/response-code-external-system"
+					},
+					"response_security_code": {
+						"$ref": "#/components/schemas/response-security-code"
+					},
+					"status": {
+						"$ref": "#/components/schemas/status"
+					},
+					"terminal_id": {
+						"$ref": "#/components/schemas/terminal-id"
+					},
+					"token": {
+						"$ref": "#/components/schemas/token"
+					},
+					"transaction_action": {
+						"$ref": "#/components/schemas/transaction-action"
+					},
+					"payment_type_description": {
+						"$ref": "#/components/schemas/payment-type-description"
+					},
+					"response_avs_description": {
+						"$ref": "#/components/schemas/response-avs-description"
+					},
+					"response_description": {
+						"$ref": "#/components/schemas/response-description"
+					},
+					"response_security_description": {
+						"$ref": "#/components/schemas/response-security-description"
+					},
+					"status_description": {
+						"$ref": "#/components/schemas/status-description"
+					},
+					"transaction_action_description": {
+						"$ref": "#/components/schemas/transaction-action-description"
+					},
+					"response_date": {
+						"$ref": "#/components/schemas/response-date"
+					},
+					"response_time": {
+						"$ref": "#/components/schemas/response-time"
+					}
+				}
+			},
+			"standard_error": {
+				"type": "object",
+				"required": [
+					"title",
+					"problem"
+				],
+				"properties": {
+					"detail": {
+						"description": "A human-readable explanation specific to this occurrence of the problem.",
+						"type": "string",
+						"example": "Invalid user input"
+					},
+					"instance": {
+						"description": "A URI reference that identifies the specific occurrence of the problem.  It may or may not yield further information if dereferenced.",
+						"type": "string",
+						"format": "uri"
+					},
+					"invalid_params": {
+						"description": "A list of exceptions for the operation by field.",
+						"type": "array",
+						"minItems": 0,
+						"readOnly": true,
+						"items": {
+							"description": "Describes a field's violation to one business rule.",
+							"type": "object",
+							"required": [
+								"field",
+								"rule",
+								"rule_code"
+							],
+							"properties": {
+								"field": {
+									"description": "A field in the operation's signature (path, query, body) that is violating a business rule.",
+									"type": "string"
+								},
+								"rule": {
+									"description": "The rule that was violated due to the corresponding field.",
+									"type": "string"
+								},
+								"rule_code": {
+									"description": "An array of the codes for each rule violation",
+									"type": "array",
+									"minItems": 1,
+									"items": {
+										"type": "string",
+										"description": "A code specifying the rule that was violated.  The rule code should be documented https://wiki.inbcu.com/display/UPA/HTTP+Error+Codes"
+									}
+								}
+							}
+						}
+					},
+					"problem": {
+						"description": "The uniquely identifiable (primary key) value of the problem that has occurred; the computer readable version of the problem. The rule code should be documented https://wiki.inbcu.com/display/UPA/HTTP+Error+Codes",
+						"type": "string",
+						"example": "validation-error"
+					},
+					"title": {
+						"description": "A short, human-readable summary of the problem type.  It SHOULD NOT change from occurrence to occurrence of the problem, except for purposes of localization (e.g., using proactive content negotiation; see [RFC7231], Section 3.4).",
+						"type": "string",
+						"example": "Your request parameters did not validate"
+					},
+					"type": {
+						"description": "A URI reference [RFC3986] that identifies the problem type.  This specification encourages that, when dereferenced, it provide human-readable documentation for the  problem type (e.g., using HTML [W3C.REC-html5-20141028]).  When this member is not present, its value is assumed to be \"about:blank\".",
+						"type": "string",
+						"format": "uri",
+						"example": "https://services.use.ucdp.net/carts/validation-error",
+						"default": ""
+					}
+				}
+			},
+			"standard_201_response": {
+				"description": "Created - The request succeeded, and a new resource was created as a result. This is typically the response sent after POST requests, or some PUT requests."
+			},
+			"standard_204_response": {
+				"description": "No Content - There is no content to send for this request, but the headers may be useful. The user agent may update its cached headers for this resource with the new ones."
+			},
+			"standard_207_response": {
+				"description": "Multi-Status - The service has processed multiple independent resources, each with their own status codes. The response contains the processing status of every resource processed by this operation.",
+				"properties": {
+					"items": {
+						"$ref": "#/components/schemas/standard_error"
+					}
+				}
+			},
+			"standard_304_error": {
+				"description": "Not Modified - This is used for caching purposes. It tells the client that the response has not been modified, so the client can continue to use the same cached version of the response."
+			},
+			"standard_400_error": {
+				"description": "Bad Request - A request parameter is invalid.",
+				"properties": {
+					"items": {
+						"$ref": "#/components/schemas/standard_error"
+					}
+				}
+			},
+			"standard_404_error": {
+				"description": "Not Found - The requested resource could not be found but may be available in the future. Subsequent requests by the client are permissible."
+			},
+			"standard_409_error": {
+				"description": "Conflict - Indicates that the request could not be processed because of conflict in the current state of the resource, such as an edit conflict between multiple simultaneous updates.",
+				"properties": {
+					"items": {
+						"$ref": "#/components/schemas/standard_error"
+					}
+				}
+			},
+			"standard_412_error": {
+				"description": "Precondition Failed - The client has indicated preconditions in its headers which the server does not meet.",
+				"properties": {
+					"items": {
+						"$ref": "#/components/schemas/standard_error"
+					}
+				}
+			},
+			"standard_422_error": {
+				"description": "Unprocessable Entity - The request body is is syntactically correct; however, an attribute value is incorrect.",
+				"properties": {
+					"items": {
+						"$ref": "#/components/schemas/standard_error"
+					}
+				}
+			},
+			"standard_500_error": {
+				"description": "Internal Server Error - A generic error indication for an unexpected server execution problem.  This usually indicates an error in the service itself."
+			},
+			"standard_503_error": {
+				"description": "Service Unavailable - Service is (temporarily) not available (e.g. if a required component or downstream service is not available) - client retry may be sensible."
+			},
+			"deprecated_cardinalTokenRequestModel": {
+				"type": "object",
+				"properties": {
+					"orderId": {
+						"type": "string"
+					}
+				},
+				"example": {
+					"orderId": "1605855117370"
+				}
+			},
+			"deprecated_aciAuthorizeRemoteRequestModel": {
+				"required": [
+					"amount",
+					"currencyCode",
+					"expireMonth",
+					"expireYear",
+					"orderDate",
+					"orderId"
+				],
+				"type": "object",
+				"properties": {
+					"orderId": {
+						"type": "string"
+					},
+					"orderDate": {
+						"type": "string"
+					},
+					"amount": {
+						"type": "number"
+					},
+					"currencyCode": {
+						"type": "string"
+					},
+					"accountNumber": {
+						"type": "string"
+					},
+					"expireYear": {
+						"type": "string"
+					},
+					"expireMonth": {
+						"type": "string"
+					},
+					"cardSecurityCode": {
+						"type": "string"
+					},
+					"tokenId": {
+						"type": "string"
+					},
+					"skipSecurityCodeCheck": {
+						"type": "boolean"
+					},
+					"performAvsCheck": {
+						"type": "boolean"
+					},
+					"apikey": {
+						"type": "string"
+					},
+					"merchantId": {
+						"type": "string"
+					},
+					"terminalId": {
+						"type": "string"
+					},
+					"storeId": {
+						"type": "string"
+					},
+					"terminalNumber": {
+						"type": "string"
+					},
+					"customer": {
+						"required": [
+							"address1",
+							"city",
+							"countryCode",
+							"firstName",
+							"lastName",
+							"postalCode",
+							"stateProvince",
+							"workPhone"
+						],
+						"type": "object",
+						"properties": {
+							"firstName": {
+								"type": "string"
+							},
+							"lastName": {
+								"type": "string"
+							},
+							"address1": {
+								"type": "string"
+							},
+							"city": {
+								"type": "string"
+							},
+							"stateProvince": {
+								"type": "string"
+							},
+							"postalCode": {
+								"type": "string"
+							},
+							"countryCode": {
+								"type": "string"
+							},
+							"workPhone": {
+								"type": "string"
+							}
+						}
+					},
+					"FraudReport": {
+						"required": [
+							"Cavv",
+							"EciFlag",
+							"TransactionId",
+							"Xid"
+						],
+						"type": "object",
+						"properties": {
+							"Cavv": {
+								"type": "string",
+								"example": "hp/5moVOS+ZOYwAAhuI6BlkAAAA="
+							},
+							"EciFlag": {
+								"type": "string",
+								"example": "06"
+							},
+							"TransactionId": {
+								"type": "string",
+								"example": "t4W86tjA5xjidZsGjQL0"
+							},
+							"Xid": {
+								"type": "string",
+								"example": "dDRXODZ0akE1eGppZFpzR2pRTDA="
+							}
+						},
+						"description": "Request properties for Cardinal Auth"
+					}
+				},
+				"example": {
+					"orderId": "12353",
+					"orderDate": "2016-07-22 11:32:00",
+					"amount": 1.98,
+					"currencyCode": "USD",
+					"accountNumber": "4111111111111111",
+					"expireYear": "2021",
+					"expireMonth": "12",
+					"cardSecurityCode": "123",
+					"apikey": "webstore",
+					"customer": {
+						"firstName": "Universal",
+						"lastName": "Studios",
+						"address1": "6000 Universal Blvd",
+						"city": "Orlando",
+						"stateProvince": "FL",
+						"postalCode": "32819",
+						"countryCode": "USA",
+						"workPhone": "(407) 363-8000"
+					},
+					"FraudReport": {
+						"Cavv": "hp/5moVOS+ZOYwAAhuI6BlkAAAA=",
+						"EciFlag": "06",
+						"TransactionId": "t4W86tjA5xjidZsGjQL0",
+						"Xid": "dDRXODZ0akE1eGppZFpzR2pRTDA="
+					}
+				}
+			},
+			"deprecated_aciRefundRemoteRequestModel": {
+				"type": "object",
+				"properties": {
+					"amount": {
+						"type": "string",
+						"example": "1.80"
+					},
+					"apikey": {
+						"type": "string",
+						"example": "webstore"
+					},
+					"requestId": {
+						"type": "string",
+						"example": "123456840000"
+					}
+				}
+			},
+			"deprecated_aciCaptureRemoteRequestModel": {
+				"type": "object",
+				"properties": {
+					"amount": {
+						"type": "string",
+						"example": "48.40"
+					},
+					"apikey": {
+						"type": "string",
+						"example": "webstore"
+					},
+					"requestId": {
+						"type": "string",
+						"example": "200012345126"
+					}
+				}
+			},
+			"deprecated_tokenize-request-model": {
+				"type": "object",
+				"properties": {
+					"accountNumber": {
+						"type": "string",
+						"example": "4111111111111111"
+					},
+					"currencyCode": {
+						"type": "string",
+						"example": "USD"
+					},
+					"expireMonth": {
+						"type": "string",
+						"example": "12"
+					},
+					"expireYear": {
+						"type": "string",
+						"example": "2022"
+					}
+				}
+			},
+			"deprecated_tokenize-response-model": {
+				"type": "object",
+				"properties": {
+					"accountNumber": {
+						"type": "string",
+						"example": "XXXXXXXXXXXX1111"
+					},
+					"transactionAction": {
+						"type": "string",
+						"example": "GT"
+					},
+					"transactionActionDescription": {
+						"type": "string",
+						"example": "Get Token"
+					},
+					"paymentType": {
+						"type": "string",
+						"example": "VI"
+					},
+					"paymentTypeDescription": {
+						"type": "string",
+						"example": "Visa"
+					},
+					"requestId": {
+						"type": "string",
+						"example": "150011807223"
+					},
+					"requestTypeCode": {
+						"type": "string",
+						"example": "M"
+					},
+					"status": {
+						"type": "string",
+						"example": "SUCCESS"
+					},
+					"statusDescription": {
+						"type": "string",
+						"example": "Request completed successfully"
+					},
+					"tokenId": {
+						"type": "string",
+						"example": "4111113233931111"
+					}
+				}
+			},
+			"api-key": {
+				"type": "string",
+				"description": "api key reflecting source of transaction.  Populated from x-uniwebservice-apikey request header",
+				"example": "webstore"
+			},
+			"address-line1": {
+				"type": "string",
+				"example": "PO Box 2146"
+			},
+			"address-line2": {
+				"type": "string",
+				"example": "Apt 4"
+			},
+			"authorization-number": {
+				"type": "string",
+				"example": "OK6955"
+			},
+			"card-on-file-type": {
+				"type": "string",
+				"description": "The category of the transaction",
+				"enum": [
+					"UNSCHEDULED",
+					"INSTALLMENT",
+					"RECURRING"
+				],
+				"example": "UNSCHEDULED"
+			},
+			"card-on-file-mode": {
+				"type": "string",
+				"description": "Indicating the mode of subsequent payment transaction",
+				"enum": [
+					"INITIAL",
+					"REPEATED"
+				],
+				"example": "INITIAL"
+			},
+			"card-on-file-source": {
+				"type": "string",
+				"description": "Indicating the type of subsequent payment transaction",
+				"enum": [
+					"CIT",
+					"MIT"
+				],
+				"example": "CIT"
+			},
+			"card-on-file-initial-transaction-id": {
+				"type": "string",
+				"description": "The value/ID is received as part of the acquirer response of a CIT flagged transaction"
+			},
+			"card-on-file-industry-practice": {
+				"type": "string",
+				"description": "The MIT types defined under this category are performed to fulfill a business practice \nas a follow-up to an original cardholder-merchant interaction that could not be \ncompleted with one single transaction",
+				"enum": [
+					"INCREMENTAL_AUTH",
+					"RESUBMISSION",
+					"REAUTHORIZATION",
+					"DELAYED_CHARGES",
+					"NO_SHOW"
+				]
+			},
+			"card-on-file-expiry": {
+				"type": "string",
+				"description": "Recurring Expiry: Date after which no further authorizations shall be performed"
+			},
+			"card-on-file-frequency": {
+				"type": "string",
+				"description": "Recurring Frequency: Indicates the minimum number of days between authorizations."
+			},
+			"card-on-file-number-of-installments": {
+				"type": "string",
+				"description": "Installment Payment Data: Indicates the maximum number of authorisations \npermitted for installment payments"
+			},
+			"cardinal-token": {
+				"type": "string",
+				"example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiMTYwNTg1NTExNzM3MCIsIk9yZ1VuaXRJZCI6IjViNzJmYzdmZmY2MjZiMjljMGZhYjExZSIsImp0aSI6IjFiNGY1NTE3LTA4YTAtNGIzMi05ODMwLTM3Njg5MTEzZjdlOCIsImlhdCI6MTYzNDkxMTU2MCwiZXhwIjoxNjM0OTEzMzYwLCJpc3MiOiI1YjczMWU5MWZmNjI2YjI5YzBmYWNiOTQifQ.7g6c9f494uQk-xzkccrUU8zVrQCVkk3MJHDSxJasksY"
+			},
+			"card-security-indicator": {
+				"type": "string",
+				"example": "1"
+			},
+			"channel": {
+				"type": "string",
+				"enum": [
+					"dtv",
+					"ice",
+					"locker",
+					"merch",
+					"mfdo",
+					"pos",
+					"taptopay"
+				],
+				"example": "ice"
+			},
+			"city": {
+				"type": "string",
+				"example": "Iqaluit"
+			},
+			"country-code": {
+				"type": "string",
+				"example": "US"
+			},
+			"currency-code": {
+				"type": "string",
+				"example": "USD",
+				"minLength": 3,
+				"maxLength": 3
+			},
+			"cvv": {
+				"description": "The card verification value or security code used to verify a user is authorized to use the card.",
+				"type": "string",
+				"example": "123"
+			},
+			"created-date": {
+				"type": "string",
+				"example": "2022-12-20T15:47:29.291Z"
+			},
+			"email-address": {
+				"description": "An email address string",
+				"type": "string",
+				"example": "john.smith@email.com",
+				"maximum": 255,
+				"minimum": 5
+			},
+			"expire-month": {
+				"type": "string",
+				"example": "1",
+				"description": "The expiration month of the credit card"
+			},
+			"expire-year": {
+				"type": "string",
+				"example": "2030",
+				"description": "The expiration year of the credit card"
+			},
+			"first-name-on-card": {
+				"description": "The first name as it appears on the Payment Card.",
+				"type": "string",
+				"example": "Rob"
+			},
+			"guest-id": {
+				"description": "UUID generated for the guest profile",
+				"example": "123e4567-e89b-12d3-a456-426655543670",
+				"maximum": 50,
+				"type": "string"
+			},
+			"instance-id": {
+				"description": "An application instance id",
+				"example": "d88dc800-af7e-11e7-90a5-6b739452a1bb",
+				"maximum": 50,
+				"type": "string"
+			},
+			"ipaddress": {
+				"type": "string",
+				"example": "10.18.72.32"
+			},
+			"last_four_digits": {
+				"description": "The last for digits of the payment card used.",
+				"type": "string",
+				"example": "4321"
+			},
+			"last-name-on-card": {
+				"description": "The last name as it appears on the Payment Card.",
+				"type": "string",
+				"example": "Jones"
+			},
+			"merchant-category-code": {
+				"type": "string",
+				"example": "5999"
+			},
+			"merchant-id": {
+				"type": "string",
+				"description": "Merchant Identifier",
+				"example": "372032779889"
+			},
+			"order-date": {
+				"type": "string",
+				"description": "Order Date Time",
+				"example": "2016-07-22 11:32:00"
+			},
+			"order-id": {
+				"type": "string",
+				"description": "Order Identifer",
+				"example": "U02352588"
+			},
+			"payment-account-number": {
+				"type": "string",
+				"description": "The term primary account number refers to a 14-, 15-, 16-, or even up to 19-digit \nnumber generated as a unique identifier designated for a primary account",
+				"example": 4111111111111111
+			},
+			"payment-type": {
+				"type": "string",
+				"enum": [
+					"AX",
+					"DC",
+					"DI",
+					"JC",
+					"MC",
+					"VI"
+				],
+				"example": "VI"
+			},
+			"payment-type-description": {
+				"type": "string",
+				"example": "Visa"
+			},
+			"phone-number": {
+				"type": "string",
+				"example": "(867) 979-3938",
+				"description": "The phone number on file for the payment method"
+			},
+			"postal-code": {
+				"type": "string",
+				"example": "32746"
+			},
+			"request-id": {
+				"type": "string",
+				"description": "The identifier of the payment request that can be used to reference the payment later.",
+				"example": "8ac7a4a17ca3246a017ca40d5be00629"
+			},
+			"request-type-code": {
+				"type": "string",
+				"example": "E"
+			},
+			"response-avs-code": {
+				"type": "string",
+				"example": "F"
+			},
+			"response-avs-description": {
+				"type": "string",
+				"example": "Address and Postal Code Matches"
+			},
+			"response-code": {
+				"type": "string",
+				"example": "00"
+			},
+			"response-code-external-system": {
+				"type": "string",
+				"example": "000.100.112"
+			},
+			"response-date": {
+				"type": "string",
+				"example": "2021-10-22"
+			},
+			"response-description": {
+				"type": "string",
+				"example": "Approved or completed successfully"
+			},
+			"response-security-code": {
+				"type": "string",
+				"example": "U"
+			},
+			"response-security-description": {
+				"type": "string",
+				"example": "Unsupported by issuer or issuer is unable to process request"
+			},
+			"response-time": {
+				"type": "string",
+				"example": "09:09:41"
+			},
+			"same-day": {
+				"type": "boolean",
+				"description": "Indicates if Reverse (true) or Refund (false) transaction performed against the transaction identifier.",
+				"example": true
+			},
+			"source": {
+				"type": "string",
+				"enum": [
+					"POS",
+					"SmarteCarte",
+					"UniversalPay",
+					"Ice"
+				]
+			},
+			"state": {
+				"type": "string",
+				"example": "FL"
+			},
+			"status": {
+				"type": "string",
+				"example": "APPROVE"
+			},
+			"status-description": {
+				"type": "string",
+				"example": "Approved by Acquirer"
+			},
+			"store-id": {
+				"type": "string",
+				"description": "Store Identifier",
+				"example": "03335131"
+			},
+			"system-order-id": {
+				"type": "string",
+				"example": 8389393738839393
+			},
+			"terminal-id": {
+				"type": "string",
+				"description": "Terminal Identifier",
+				"example": "03335131"
+			},
+			"token": {
+				"type": "string",
+				"example": "4514013579535559",
+				"description": "The payment method token to charge"
+			},
+			"transaction-action": {
+				"type": "string",
+				"example": "OA"
+			},
+			"transaction-action-description": {
+				"type": "string",
+				"example": "Online Authorization or Fraud Screen"
+			},
+			"transaction-amount": {
+				"type": "string",
+				"description": "The transaction payment amount",
+				"example": "24.95"
+			},
+			"user-id": {
+				"description": "Commerce Userid",
+				"example": "650010",
+				"type": "string"
+			},
+			"3ds-cavv": {
+				"type": "string",
+				"description": "The 3D secure CAVV or AAV. Must be Base64 encoded.",
+				"example": "hp/5moVOS+ZOYwAAhuI6BlkAAAA="
+			},
+			"3ds-eci-flag": {
+				"type": "string",
+				"description": "The ECI for the 3D secure request",
+				"example": "06"
+			},
+			"3ds-transaction-id": {
+				"type": "string",
+				"description": "Transaction ID assigned by the directory server. Used when the transaction was already authenticated.",
+				"example": "t4W86tjA5xjidZsGjQL0"
+			},
+			"3ds-xid": {
+				"type": "string",
+				"description": "The 3D secure xid if available. Must be Base64 encoded.",
+				"example": "dDRXODZ0akE1eGppZFpzR2pRTDA="
+			},
+			"merchants-post-request": {
+				"type": "object",
+				"properties": {
+					"apikey": {
+						"type": "string",
+						"example": "mobileFoodOrdering_603"
+					},
+					"default_terminal_id": {
+						"type": "string",
+						"example": "04863879"
+					},
+					"merchant_category_code": {
+						"type": "string",
+						"example": "5812"
+					},
+					"merchant_id": {
+						"type": "string",
+						"example": "372798144880"
+					},
+					"merchant_name": {
+						"type": "string",
+						"example": "BAMBU MOBILE 603"
+					}
+				}
+			},
+			"merchants-put-request": {
+				"type": "object",
+				"properties": {
+					"apikey": {
+						"type": "string",
+						"example": "mobileFoodOrdering_603"
+					},
+					"default_terminal_id": {
+						"type": "string",
+						"example": "04863879"
+					},
+					"merchant_category_code": {
+						"type": "string",
+						"example": "5812"
+					},
+					"merchant_name": {
+						"type": "string",
+						"example": "BAMBU MOBILE 603"
+					}
+				}
+			},
+			"terminals-post-request": {
+				"type": "object",
+				"properties": {
+					"store_id": {
+						"type": "string",
+						"example": "615"
+					},
+					"terminal_id": {
+						"type": "string",
+						"example": "01070371"
+					},
+					"terminal_number": {
+						"type": "string",
+						"example": "123"
+					},
+					"merchant_id": {
+						"type": "string",
+						"example": "372798144880"
+					},
+					"merchant_category_code": {
+						"type": "string",
+						"example": "5812"
+					},
+					"merchant_name": {
+						"type": "string",
+						"example": "MMIS UNIVERSAL QA TEST 5"
+					}
+				}
+			},
+			"terminals-put-request": {
+				"type": "object",
+				"properties": {
+					"store_id": {
+						"type": "string",
+						"example": "615"
+					},
+					"terminal_number": {
+						"type": "string",
+						"example": "123"
+					},
+					"merchant_id": {
+						"type": "string",
+						"example": "372798144880"
+					},
+					"merchant_category_code": {
+						"type": "string",
+						"example": "5812"
+					},
+					"merchant_name": {
+						"type": "string",
+						"example": "MMIS UNIVERSAL QA TEST 5"
+					}
+				}
+			},
+			"preauthorize-card-request": {
+				"required": [
+					"apikey",
+					"card",
+					"customer"
+				],
+				"type": "object",
+				"properties": {
+					"card": {
+						"type": "object",
+						"properties": {
+							"account_number": {
+								"type": "string",
+								"example": "4111111111111111"
+							},
+							"token": {
+								"type": "string",
+								"example": "4111113233931111"
+							},
+							"expire_year": {
+								"type": "string",
+								"example": "2030"
+							},
+							"expire_month": {
+								"type": "string",
+								"example": "12"
+							},
+							"card_security_code": {
+								"type": "string",
+								"example": "123"
+							}
+						}
+					},
+					"customer": {
+						"required": [
+							"address1",
+							"city",
+							"country_code",
+							"first_name",
+							"last_name",
+							"phone",
+							"postal_code",
+							"state"
+						],
+						"type": "object",
+						"properties": {
+							"first_name": {
+								"type": "string",
+								"example": "Universal"
+							},
+							"last_name": {
+								"type": "string",
+								"example": "Studios"
+							},
+							"address1": {
+								"type": "string",
+								"example": "6000 Universal Blvd"
+							},
+							"city": {
+								"type": "string",
+								"example": "Orlando"
+							},
+							"state": {
+								"type": "string",
+								"example": "FL"
+							},
+							"postal_code": {
+								"type": "string",
+								"example": "32819"
+							},
+							"country_code": {
+								"type": "string",
+								"example": "US"
+							},
+							"phone": {
+								"type": "string",
+								"example": "(407) 363-8000"
+							}
+						}
+					},
+					"apikey": {
+						"type": "string",
+						"example": "webstore"
+					}
+				}
+			}
+		},
+		"parameters": {
+			"path_blocked-token": {
+				"name": "blocked-token",
+				"description": "Blocked payment token value",
+				"in": "path",
+				"required": true,
+				"schema": {
+					"type": "string"
+				}
+			},
+			"path_resort-area-code": {
+				"name": "resort-area-code",
+				"description": "A uniquely identifying value for the resort area.",
+				"in": "path",
+				"required": true,
+				"schema": {
+					"type": "string"
+				},
+				"x-example": "UOR"
+			},
+			"path_merchant-id": {
+				"name": "merchant-id",
+				"description": "An identifying value for the merchant_id",
+				"in": "path",
+				"required": true,
+				"schema": {
+					"type": "string"
+				}
+			},
+			"path_terminal-id": {
+				"name": "terminal-id",
+				"in": "path",
+				"required": true,
+				"schema": {
+					"type": "string"
+				}
+			},
+			"path_guest-id": {
+				"name": "guest-id",
+				"in": "path",
+				"required": true,
+				"schema": {
+					"type": "string"
+				}
+			}
+		}
+	}
+}

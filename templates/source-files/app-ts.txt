@@ -1,0 +1,15 @@
+import "reflect-metadata";
+import { Logger } from "@uo/logger";
+import env from "./configs";
+
+export const logger = new Logger(env.logOptions);
+export const apiCorrelationId = env.apiCorrelationId;
+
+import server from "./server";
+const app = new server(logger);
+(async () => {
+    await app.start();
+})();
+
+export default app;
+export const startTime = app.startTime;

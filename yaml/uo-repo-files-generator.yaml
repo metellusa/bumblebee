@@ -1,0 +1,248 @@
+openapi: 3.0.1
+info:
+  title: uo-repo-files-generator API
+  description: Generate a repository's source files based on a given swagger
+  version: "1.0.0"
+  x-generation-date: Tuesday 8 Feb 2022 10:50
+
+tags:
+- name: actions
+
+paths:
+  /submit-swagger:
+    post:
+      tags:
+        - actions
+      summary: Submit swagger to be parsed
+      operationId: ActionController.SubmitSwagger
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/submit-swagger-request'
+      responses:
+        200:
+          description: Request was successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/swagger'
+        400:
+          description: Bad Request
+        500:
+          description: Internal Server Error
+  /generate-unit-tests:
+    post:
+      tags:
+        - actions
+      summary: Generate unit tests based on submitted paths
+      operationId: ActionController.GenerateUnitTestFiles
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/swagger'
+      responses:
+        200:
+          description: Request was successful
+        400:
+          description: Bad Request
+        500:
+          description: Internal Server Error
+  /generate-code-files:
+    post:
+      tags:
+        - actions
+      summary: Generate unit tests based on submitted paths
+      operationId: ActionController.generateCodeFiles
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/swagger'
+      responses:
+        200:
+          description: Request was successful
+        400:
+          description: Bad Request
+        500:
+          description: Internal Server Error
+
+components:
+  schemas:
+    submit-swagger-request:
+      type: object
+      properties:
+        filePath:
+          $ref: '#/components/schemas/file_path'
+    swagger:
+      type: object
+      properties:
+        targetLocation:
+          $ref: '#/components/schemas/target_location'
+        tags:
+          $ref: '#/components/schemas/tags'
+        paths:
+          $ref: '#/components/schemas/paths'
+        swaggerComponents: 
+          $ref: '#/components/schemas/swagger_components'
+        connectors: 
+          $ref: '#/components/schemas/connectors'
+    file_path:
+      name: filePath
+      description: Swagger file path
+      example: C:/Users/703080488/Documents/ms-payments.yaml
+      type: string
+      required: true
+    connectors:
+      name: connectors
+      description: list of connectors that the service will integrate with
+      example: ["msReferences"]
+      type: array
+      required: false
+    target_location:
+      name: targetLocation
+      description: The target for files generation
+      example: C:/Users/703080488/Documents/ms-payments
+      type: string
+      required: true
+    tags:
+      name: tags
+      description: Tags extracted from the swagger
+      example: [
+          "transactions",
+          "blocked tokens (crud)",
+          "merchants (crud)",
+          "merchant terminals (crud)",
+          "payment-responses (crud)",
+          "aci (deprecated)"
+      ]
+      type: object
+      required: true
+    paths:
+      name: paths
+      description: Paths extracted from the swagger
+      example: [
+          {
+            "path": "/resort-areas/{resort-area-code}/authorize",
+            "verbs": [
+              {
+                "verb": "post",
+                "tag": "transactions",
+                "url": "/resort-areas/{resort-area-code}/authorize",
+                "summary": "authorize transaction",
+                "model": "",
+                "responseCodes": [
+                  "200",
+                  "400",
+                  "500",
+                  "503"
+                ],
+                "isCrud": false
+              }
+            ]
+          },
+          {
+            "path": "/resort-areas/{resort-area-code}/capture",
+            "verbs": [
+              {
+                "verb": "post",
+                "tag": "transactions",
+                "url": "/resort-areas/{resort-area-code}/capture",
+                "summary": "capture transaction",
+                "model": "",
+                "responseCodes": [
+                  "200",
+                  "400",
+                  "500",
+                  "503"
+                ],
+                "isCrud": false
+              }
+            ]
+          },
+          {
+            "path": "/resort-areas/{resort-area-code}/payment",
+            "verbs": [
+              {
+                "verb": "post",
+                "tag": "transactions",
+                "url": "/resort-areas/{resort-area-code}/payment",
+                "summary": "authorize & auto-capture transaction",
+                "model": "",
+                "responseCodes": [
+                  "200",
+                  "400",
+                  "500",
+                  "503"
+                ],
+                "isCrud": false
+              }
+            ]
+          }]
+      type: object
+      required: true
+    swagger_components:
+      name: swaggerComponents
+      description: A map of request, response and model bodies
+      example: {
+          "capture-request": {
+            "name": "capture-request",
+            "properties": [
+              {
+                "isRequired": true,
+                "name": "amount",
+                "type": "string",
+                "example": "24.95"
+              },
+              {
+                "isRequired": true,
+                "name": "currency_code",
+                "type": "string",
+                "example": "USD"
+              },
+              {
+                "isRequired": true,
+                "name": "request_id",
+                "type": "string",
+                "example": "8ac7a4a17ca3246a017ca40d5be00629"
+              }
+            ]
+          },
+          "reverse-request": {
+            "name": "reverse-request",
+            "properties": [
+              {
+                "isRequired": true,
+                "name": "request_id",
+                "type": "string",
+                "example": "8ac7a4a17ca3246a017ca40d5be00629"
+              }
+            ]
+          },
+          "refund-request": {
+            "name": "refund-request",
+            "properties": [
+              {
+                "isRequired": true,
+                "name": "request_id",
+                "type": "string",
+                "example": "8ac7a4a17ca3246a017ca40d5be00629"
+              },
+              {
+                "isRequired": false,
+                "name": "amount",
+                "type": "string",
+                "example": "24.95"
+              },
+              {
+                "isRequired": false,
+                "name": "currency_code",
+                "type": "string",
+                "example": "USD"
+              }
+            ]
+          }
+          }
+      type: object
+      required: true

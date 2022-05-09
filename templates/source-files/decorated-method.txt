@@ -1,0 +1,13 @@
+    /**
+     * @description methodDescription
+     * methodParamsDescription
+     * @returns { methodReturnType } methodReturnDescr
+     */
+    methodDecorators
+    public async methodName(
+        methodParams
+    ): Promise<methodReturnType> {
+        const operationId = methodOperationId;
+
+        throw new Error("Method not implemented.");
+    }
