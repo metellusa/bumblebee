@@ -25,7 +25,7 @@ import { Verb } from "../models/domain/verb";
 import CommonUtils from "../utils/common-utils";
 import ModelsService from "./models.service";
 import { Property } from "../models/domain/property";
-import { VerbBody } from "../models/domain/verb-request-body";
+import { VerbBody } from "../models/domain/verb-body";
 import { VerbBodyType } from "../enums/verb-body-type.enum";
 import { Parameter } from "../models/domain/parameter";
 import { VerbElement } from "../models/domain/verb-element";

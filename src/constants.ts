@@ -28,7 +28,7 @@ export const SERVICE_FILE_SUFFIX = "service.ts";
 export const DATABASE_ADAPTER_FILE_SUFFIX = "database.adapter.ts";
 export const VALIDATION_MESSAGES_FILE = "validation-messages.const";
 
-/** npm libraries used in generated repos */
+/** Libraries used in UO microservices repos */
 export const CLASS_VALIDATOR_LIB = "class-validator";
 export const CLASS_TRANSFORMER_LIB = "class-transformer";
 export const ROUTING_CONTROLLERS_LIB = "routing-controllers";

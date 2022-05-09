@@ -36,7 +36,7 @@ export default class UnitTestUtils {
 
     /**
      * @description creates a describe block as a string based on the describe block template
-     * @param spec the describe block attributes
+     * @param describeBlock the describe block attributes
      * @param additionalReplaces a list of additional targets to remove from the template
      * @returns {string} returns the newly created describe block as a string
      */

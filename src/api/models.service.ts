@@ -6,7 +6,7 @@ import {
 import { Property } from "../models/domain/property";
 import CommonUtils from "../utils/common-utils";
 import path from "path";
-import { VerbBody } from "../models/domain/verb-request-body";
+import { VerbBody } from "../models/domain/verb-body";
 import beautify from "js-beautify";
 import pluralize from "pluralize";
 import { VerbBodyType } from "../enums/verb-body-type.enum";

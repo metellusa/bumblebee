@@ -7,7 +7,7 @@ import { Path } from "../models/domain/path";
 import { Property } from "../models/domain/property";
 import { SubmitSwaggerRequest } from "../models/api/submit-swagger-request";
 import { Verb } from "../models/domain/verb";
-import { VerbBody } from "../models/domain/verb-request-body";
+import { VerbBody } from "../models/domain/verb-body";
 import CommonUtils from "../utils/common-utils";
 import { SubmitSwaggerResponse } from "../models/api/submit-swagger-response";
 import { VerbBodyType } from "../enums/verb-body-type.enum";

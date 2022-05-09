@@ -1,5 +1,5 @@
 import fs from "fs";
-import beautify from "js-beautify";
+import beautify, { JSBeautifyOptions } from "js-beautify";
 import Case from "case";
 import { BODY, CATCH_ALL, DELETE, GET, HEADER_PARAM, HTTP_CODE, ON_UNDEFINED, PARAM, POST, PUT, ROUTING_CONTROLLERS_LIB, UO_STATUS_CODE_LIB } from "../constants";
 import { Decorator } from "../models/domain/decorator";
@@ -20,6 +20,7 @@ import CommonUtils from "./common-utils";
      */
     public static async createOrUpdateFile(sourceFile: SourceFile) {
         CommonUtils.createDirIfNotExist(sourceFile.folder);
+        const beautifyOptions: JSBeautifyOptions = { brace_style: "preserve-inline" };
         const filePath = `${sourceFile.folder}/${sourceFile.file}`;
 
         if (fs.existsSync(filePath)) {
@@ -46,7 +47,7 @@ import CommonUtils from "./common-utils";
                         updatedClass = `${classImport}${index < sourceFile.classImports.length - 1 ? "\n" : ""}${updatedClass}`;
                     }
                 });
-                fs.writeFileSync(filePath, beautify.js(updatedClass, { brace_style: "preserve-inline" }) + "\n");
+                fs.writeFileSync(filePath, beautify.js(updatedClass, beautifyOptions) + "\n");
             }
         } else {
             if (sourceFile.decoratorImports) {
@@ -63,7 +64,7 @@ import CommonUtils from "./common-utils";
                 imports: sourceFile.classImports.join("\n"),
                 decorators: sourceFile.classDecorators
             });
-            fs.writeFileSync(filePath, beautify.js(classContent, { brace_style: "preserve-inline" }) + "\n");
+            fs.writeFileSync(filePath, beautify.js(classContent, beautifyOptions) + "\n");
         }
     }
 

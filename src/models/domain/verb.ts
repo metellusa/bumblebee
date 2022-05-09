@@ -1,4 +1,4 @@
-import { VerbBody } from "./verb-request-body";
+import { VerbBody } from "./verb-body";
 
 export class Verb {
     public signature: string;
