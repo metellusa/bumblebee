@@ -30,6 +30,7 @@ import pluralize from "pluralize";
 import { Decorator } from "../models/domain/decorator";
 import { MethodParamDecorator } from "../enums/method-param-decorator.enum";
 import SouceCodeUtils from "../utils/source-code-utils";
+import ConnectorService from "./connector-service";
 
 export default class SourceCodeService {
 
@@ -75,7 +76,13 @@ export default class SourceCodeService {
                     this.generateController(verb, swagger.targetLocation, requestBodyName, responseBodyName, parameters);
 
                     if (verb.isPersistedModel) {
+                        // Generate the database adapter file
                         this.generateDatabaseAdapter(verb, swagger.targetLocation, parameters);
+                    }
+
+                    if (swagger.connectors) {
+                        // Generate the connector file
+                        ConnectorService.generateConnectorFiles(swagger.targetLocation, swagger.connectors);
                     }
                 });
             });

@@ -26,6 +26,7 @@ export const ADAPTER_TEST_FILE_SUFFIX = "adapter.spec.ts";
 export const CONTROLLER_FILE_SUFFIX = "controller.ts";
 export const SERVICE_FILE_SUFFIX = "service.ts";
 export const DATABASE_ADAPTER_FILE_SUFFIX = "database.adapter.ts";
+export const CONNECTOR_FILE_SUFFIX = "adapter.ts";
 export const VALIDATION_MESSAGES_FILE = "validation-messages.const";
 
 /** Libraries used in UO microservices repos */
