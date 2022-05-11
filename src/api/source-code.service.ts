@@ -23,10 +23,6 @@ import {
 import Case from "case";
 import { Verb } from "../models/domain/verb";
 import CommonUtils from "../utils/common-utils";
-import ModelsService from "./models.service";
-import { Property } from "../models/domain/property";
-import { VerbBody } from "../models/domain/verb-body";
-import { VerbBodyType } from "../enums/verb-body-type.enum";
 import { Parameter } from "../models/domain/parameter";
 import { VerbElement } from "../models/domain/verb-element";
 import path from "path";
@@ -54,26 +50,19 @@ export default class SourceCodeService {
 
             swagger.paths.forEach((path) => {
                 path.verbs.forEach((verb) => {
-
                     let responseBodyName, requestBodyName;
                     let parameters: Parameter[] = [];
 
-                    // Generate all the models pertaining to the request body if any
                     if (verb.requestBodyRef) {
                         const requestBodyObj = components.get(verb.requestBodyRef);
-                        if (requestBodyObj) {
-                            requestBodyName = requestBodyObj.name;
-                            this.generateAllRelevantModels(requestBodyObj as VerbBody, verb.tag, verb.isPersistedModel, swagger.targetLocation);
-                        }
+                        requestBodyName = requestBodyObj ? requestBodyObj.name : undefined;
                     }
-                    // Generate all the models pertaining to the response body if any
+
                     if (verb.responseBodyRef) {
                         const responseBodyObj = components.get(verb.responseBodyRef);
-                        if (responseBodyObj) {
-                            responseBodyName = responseBodyObj.name;
-                            this.generateAllRelevantModels(responseBodyObj as VerbBody, verb.tag, verb.isPersistedModel, swagger.targetLocation);
-                        }
+                        responseBodyName = responseBodyObj ? responseBodyObj.name : undefined;
                     }
+
                     if (verb.parameters) {
                         verb.parameters.forEach(parameter => {
                             parameters.push(components.get(parameter) as Parameter);
@@ -90,6 +79,7 @@ export default class SourceCodeService {
                     }
                 });
             });
+
         } else {
             throw new Error(`Target location specified: ${swagger.targetLocation} does not exist`);
         }
@@ -355,58 +345,5 @@ export default class SourceCodeService {
             className: `${className} extends ${DATABASE_ADAPTER}`,
             classDescription
         });
-    }
-
-    /**
-     * @description Generates all models related to a request or response object
-     * @param verbBody the verb body
-     * @param verbTag the verb tag
-     * @param isPersistedModel is the model persited
-     * @param directory the directory where the request or response model files must be generated
-     * @returns {void} nothing returned
-     */
-    private static async generateAllRelevantModels(verbBody: VerbBody, verbTag: string, isPersistedModel: boolean, directory: string) {
-        const modelsDirectory = `${directory}/${API_MODELS_DIR}/${Case.kebab(verbTag)}/`;
-        const entityModelsDirectory = `${directory}/${ENTITY_MODELS_DIR}/`;
-        const adapterModelsDirectory = `${directory}/${ADAPTER_MODELS_DIR}/`;
-        let entityModels: string[] = [];
-
-        CommonUtils.createDirIfNotExist(entityModelsDirectory);
-        verbBody.properties.forEach(property => {
-            if (CommonUtils.isEntityObject(property)) {
-                ModelsService.generateEntityModel(property, entityModelsDirectory);
-                entityModels.push(property.type);
-            }
-
-            let fieldProperties: Property[] | undefined = property.properties;
-            while (fieldProperties) {
-                fieldProperties.forEach(field => {
-                    if (CommonUtils.isEntityObject(field)) {
-                        ModelsService.generateEntityModel(field, entityModelsDirectory);
-                    }
-                    fieldProperties = field.properties;
-                });
-            }
-        });
-
-        CommonUtils.createDirIfNotExist(modelsDirectory);
-        if (verbBody.type === VerbBodyType.request) {
-            ModelsService.generateRequestModel(verbBody, modelsDirectory, entityModels);
-        } else if (verbBody.type === VerbBodyType.response) {
-            ModelsService.generateResponseModel(verbBody, modelsDirectory, entityModels);
-        } else if (verbBody.type === VerbBodyType.model) {
-            const entityModel = {
-                name: pluralize.singular(verbBody.name),
-                properties: verbBody.properties
-            } as Property;
-
-            ModelsService.generateEntityModel(entityModel, entityModelsDirectory);
-
-            if (isPersistedModel) {
-                //Generate database adapter models
-                CommonUtils.createDirIfNotExist(adapterModelsDirectory);
-                ModelsService.generateAdapterModel(verbBody, adapterModelsDirectory);
-            }
-        }
     }
 }

@@ -18,9 +18,9 @@ export default class ActionsService {
     private static inputYaml: any;
 
     /**
-     * @description Parses a given swagger
+     * @description Parses a given swagger and converts its elements into domain data models 
      * @param swaggerRequest the swagger to be parsed
-     * @returns {SubmitSwaggerResponse} returns a parsed swagger
+     * @returns {SubmitSwaggerResponse} returns the parsed swagger
      */
     public static async submitSwagger(swaggerRequest: SubmitSwaggerRequest): Promise<SubmitSwaggerResponse> {
 
@@ -79,7 +79,7 @@ export default class ActionsService {
                         if (CommonUtils.isValidVerb(rawVerb)) {
                             const verb = this.createVerb(path, rawVerb, rawVerbData);
 
-                            // If the verb has requestBody, create an entity verbBody and add it to components map
+                            // If the verb has requestBody, create a domain verbBody object and add it to components map
                             if (CommonUtils.getField(rawVerbData, "requestBody")) {
                                 const requestBodyRef = CommonUtils.getField(rawVerbData, 'requestBody.content.application/json.schema.$ref');
 
@@ -92,7 +92,7 @@ export default class ActionsService {
                                 }
                             }
 
-                            // If the verb has responseBody, create an entity verbBody and add it to components map
+                            // If the verb has responseBody, create a domain verbBody object and add it to components map
                             if (CommonUtils.getField(rawVerbData, "responses.200")) {
                                 const responseBodyRef = CommonUtils.getField(rawVerbData, 'responses.200.content.application/json.schema.$ref')
                                     || CommonUtils.getField(rawVerbData, 'responses.200.content.application/json.schema.items.$ref');
@@ -105,7 +105,7 @@ export default class ActionsService {
                                     validationErrors.push(`Request body: "${responseBodyRef}" for path ${path} must be referenced under #${SWAGGER_SCHEMA_PREFIX.replace(/./g, "/")}`);
                                 }
                             }
-                            // If the verb has parameters, create an entity verbBody and add it to components map
+                            // If the verb has parameters, create a domain parameter object and add it to components map
                             if (CommonUtils.getField(rawVerbData, "parameters")) {
                                 const parameterRefs = CommonUtils.getField(rawVerbData, "parameters");
                                 const parameterNames = addParametersToComponents(parameterRefs);
@@ -134,11 +134,11 @@ export default class ActionsService {
     }
 
     /**
-     * @description Convert the verb of given path to an entity Verb object
+     * @description Convert the verb of given path to a domain Verb object
      * @param url the verb's url
      * @param signature the verb's signature
      * @param verbFields the verb's fields
-     * @returns {Verb} returns an entity Verb object
+     * @returns {Verb} returns a domain Verb object
      */
     private static createVerb(url: string, signature: string, verbFields: any): Verb {
         let verb = new Verb();
@@ -160,10 +160,10 @@ export default class ActionsService {
     }
 
     /**
-     * @description Convert a verb's body to an entity VerbBody object
+     * @description Convert a verb's body (request or response) to a domain VerbBody object
      * @param body the verb's body
      * @param name the body name
-     * @returns {VerbBody} returns an entity VerbBody object
+     * @returns {VerbBody} returns a domain VerbBody object
      */
     private static createVerbBody(body: object, name: string): VerbBody {
         let properties: Property[] = [];
@@ -193,11 +193,11 @@ export default class ActionsService {
     }
 
     /**
-     * @description Convert a request body's property to an entity Property object
+     * @description Convert a request body's property to a domain Property object
      * @param property the property name
      * @param propertyFields the property's fields
      * @param isRequired is the property required?
-     * @returns {Property} returns an entity Property object
+     * @returns {Property} returns a domain Property object
      */
     private static createProperty(property: string, propertyFields: object, isRequired: boolean): Property {
         let propertyRef: string = CommonUtils.getField(propertyFields, '$ref');
@@ -208,7 +208,7 @@ export default class ActionsService {
             propertyFields = CommonUtils.getField(this.inputYaml, propertyRef);
         }
 
-        let entityPropertyObj: Property = {
+        let domainPropertyObj: Property = {
             isRequired: isRequired,
             name: property,
             type: this.determineTsDataType(property, propertyFields),
@@ -236,16 +236,16 @@ export default class ActionsService {
 
                 properties.push(this.createProperty(childProperty, childPropertyObj, isChildPropertyRequired));
             }
-            entityPropertyObj.properties = properties;
+            domainPropertyObj.properties = properties;
         }
 
-        return entityPropertyObj;
+        return domainPropertyObj;
     }
 
     /**
-     * @description Convert a verb's parameter to an entity Parameter object
+     * @description Convert a verb's parameter to a domain Parameter object
      * @param parameter the verb's parameter
-     * @returns {Parameter} returns an entity Parameter object
+     * @returns {Parameter} returns a domain Parameter object
      */
     static createParameter(parameter: any): Parameter {
 

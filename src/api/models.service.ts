@@ -12,15 +12,109 @@ import pluralize from "pluralize";
 import { VerbBodyType } from "../enums/verb-body-type.enum";
 import { Decorator } from "../models/domain/decorator";
 import ModelsUtils from "../utils/models-utils";
+import { VerbElement } from "../models/domain/verb-element";
+import { Swagger } from "../models/domain/swagger";
 
 export default class ModelsService {
+
+    /**
+     * @description Generates model files for a given swagger
+     * @param swagger the swagger for which the model files must be generated
+     * @returns {void} nothing returned
+     */
+    public static async generateModelFiles(swagger: Swagger) {
+        const components: Map<string, VerbElement> = new Map<string, VerbElement>(swagger.components);
+
+        if (fs.existsSync(swagger.targetLocation)) {
+            swagger.paths.forEach((path) => {
+                path.verbs.forEach((verb) => {
+
+                    let responseBodyName, requestBodyName;
+
+                    // Generate all the models pertaining to the request body if any
+                    if (verb.requestBodyRef) {
+                        const requestBodyObj = components.get(verb.requestBodyRef);
+                        if (requestBodyObj) {
+                            requestBodyName = requestBodyObj.name;
+                            this.generateAllApplicableModels(requestBodyObj as VerbBody, verb.tag, verb.isPersistedModel, swagger.targetLocation);
+                        }
+                    }
+                    // Generate all the models pertaining to the response body if any
+                    if (verb.responseBodyRef) {
+                        const responseBodyObj = components.get(verb.responseBodyRef);
+                        if (responseBodyObj) {
+                            responseBodyName = responseBodyObj.name;
+                            this.generateAllApplicableModels(responseBodyObj as VerbBody, verb.tag, verb.isPersistedModel, swagger.targetLocation);
+                        }
+                    }
+
+                });
+            });
+        } else {
+            throw new Error(`Target location specified: ${swagger.targetLocation} does not exist`);
+        }
+    }
+
+    /**
+     * @description Generates all models that are applicable to a request or response object
+     * @param verbBody the verb body
+     * @param verbTag the verb tag
+     * @param isPersistedModel is the model persited
+     * @param directory the directory where the request or response model files must be generated
+     * @returns {void} nothing returned
+     */
+    private static async generateAllApplicableModels(verbBody: VerbBody, verbTag: string, isPersistedModel: boolean, directory: string) {
+        const modelsDirectory = `${directory}/${API_MODELS_DIR}/${Case.kebab(verbTag)}/`;
+        const entityModelsDirectory = `${directory}/${ENTITY_MODELS_DIR}/`;
+        const adapterModelsDirectory = `${directory}/${ADAPTER_MODELS_DIR}/`;
+        let entityModels: string[] = [];
+
+        CommonUtils.createDirIfNotExist(entityModelsDirectory);
+        verbBody.properties.forEach(property => {
+            if (CommonUtils.isEntityObject(property)) {
+                this.generateEntityModel(property, entityModelsDirectory);
+                entityModels.push(property.type);
+            }
+
+            let fieldProperties: Property[] | undefined = property.properties;
+            while (fieldProperties) {
+                fieldProperties.forEach(field => {
+                    if (CommonUtils.isEntityObject(field)) {
+                        this.generateEntityModel(field, entityModelsDirectory);
+                    }
+                    fieldProperties = field.properties;
+                });
+            }
+        });
+
+        CommonUtils.createDirIfNotExist(modelsDirectory);
+        if (verbBody.type === VerbBodyType.request) {
+            this.generateRequestModel(verbBody, modelsDirectory, entityModels);
+        } else if (verbBody.type === VerbBodyType.response) {
+            this.generateResponseModel(verbBody, modelsDirectory, entityModels);
+        } else if (verbBody.type === VerbBodyType.model) {
+            const entityModel = {
+                name: pluralize.singular(verbBody.name),
+                properties: verbBody.properties
+            } as Property;
+
+            this.generateEntityModel(entityModel, entityModelsDirectory);
+
+            if (isPersistedModel) {
+                //Generate database adapter models
+                CommonUtils.createDirIfNotExist(adapterModelsDirectory);
+                this.generateAdapterModel(verbBody, adapterModelsDirectory);
+            }
+        }
+    }
+
     /**
      * @description Generates the request model for a given verbBody
      * @param verbBody the verbBody for which the model must be generated
      * @param directory the directory where the model must be generated
      * @returns {void} nothing returned
      */
-    public static async generateRequestModel(verbBody: VerbBody, directory: string, entityModelstoImport?: string[]) {
+    private static async generateRequestModel(verbBody: VerbBody, directory: string, entityModelstoImport?: string[]) {
         const requestModelFile = `${Case.kebab(verbBody.name)}.ts`;
         const requestModelFilePath = `${directory}${requestModelFile}`;
 
@@ -93,7 +187,7 @@ export default class ModelsService {
      * @param directory the directory where the model must be generated
      * @returns {void} nothing returned
      */
-    public static async generateResponseModel(verbBody: VerbBody, directory: string, entityModels?: string[]) {
+    private static async generateResponseModel(verbBody: VerbBody, directory: string, entityModels?: string[]) {
         const responseModelFile = `${Case.kebab(verbBody.name)}.ts`;
         const responseModelFilePath = `${directory}${responseModelFile}`;
         let classContent: string = "";
@@ -148,7 +242,7 @@ export default class ModelsService {
      * @param directory the directory where the model must be generated
      * @returns {void} nothing returned
      */
-    public static async generateEntityModel(property: Property, directory: string) {
+    private static async generateEntityModel(property: Property, directory: string) {
         const entityModelFile = Case.kebab(property.name);
         const entityModelFilePath = `${directory}${entityModelFile}.ts`;
 
@@ -202,7 +296,7 @@ export default class ModelsService {
      * @param directory the directory where the model must be generated
      * @returns {void} nothing returned
      */
-    public static async generateAdapterModel(verbBody: VerbBody, directory: string) {
+    private static async generateAdapterModel(verbBody: VerbBody, directory: string) {
         const className = Case.pascal(pluralize.singular(verbBody.name.replace("-model", "")) + "-database");
         const adapterModelFile = `${Case.kebab(className)}.ts`;
         const adapterModelFilePath = `${directory}${adapterModelFile}`;

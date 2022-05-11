@@ -4,7 +4,7 @@
   "description": "This service generates code and test files from a swagger document",
   "main": "./dist/app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "echo \"Error: no test specified\" && exiAt 1",
     "develop": "ts-node-dev --respawn --transpile-only --require dotenv/config ./src/app.ts"
   },
   "author": "",
@@ -19,7 +19,6 @@
     "express": "^4.17.2",
     "fs": "^0.0.1-security",
     "js-beautify": "^1.14.3",
-    "multer": "^1.4.4",
     "path": "^0.12.7",
     "pluralize": "^8.0.0",
     "routing-controllers": "^0.9.0",

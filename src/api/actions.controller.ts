@@ -3,6 +3,7 @@ import { SubmitSwaggerRequest } from "../models/api/submit-swagger-request";
 import { SubmitSwaggerResponse } from "../models/api/submit-swagger-response";
 import { Swagger } from "../models/domain/swagger";
 import ActionsService from "./actions.service";
+import ModelsService from "./models.service";
 import SourceCodeService from "./source-code.service";
 import UnitTestService from "./unit-test.service";
 
@@ -24,7 +25,37 @@ export default class ActionsController {
     }
 
     /**
-     * @description Generate unit test files for a given swagger
+     * @description Generate model files for a given swagger
+     * @param requestBody the request body
+     * @returns { void } returns nothing
+     */
+    @Post("/generate-models")
+    @OnUndefined(200)
+    public async generateModelFiles(
+        @Body({ required: true }) requestBody: Swagger
+    ): Promise<void> {
+        const operationId = "ActionsController.generateModelFiles";
+
+        ModelsService.generateModelFiles(requestBody);
+    }
+
+    /**
+     * @description Generate source code template files for a given swagger
+     * @param requestBody the request body
+     * @returns { void } returns nothing
+     */
+     @Post("/generate-source-code-files")
+     @OnUndefined(200)
+     public async generateCodeFiles(
+         @Body({ required: true }) requestBody: Swagger
+     ): Promise<void> {
+         const operationId = "ActionsController.generateCodeFiles";
+ 
+         SourceCodeService.generateCodeFiles(requestBody);
+     }
+
+    /**
+     * @description Generate unit test template files for a given swagger
      * @param requestBody the request body
      * @returns { void } returns nothing
      */
@@ -36,20 +67,5 @@ export default class ActionsController {
         const operationId = "ActionsController.generateUnitTestFiles";
 
         UnitTestService.generateUnitTestFiles(requestBody);
-    }
-
-    /**
-     * @description Generate source code template files for a given swagger
-     * @param requestBody the request body
-     * @returns { void } returns nothing
-     */
-    @Post("/generate-code-files")
-    @OnUndefined(200)
-    public async generateCodeFiles(
-        @Body({ required: true }) requestBody: Swagger
-    ): Promise<void> {
-        const operationId = "ActionsController.generateCodeFiles";
-
-        SourceCodeService.generateCodeFiles(requestBody);
     }
 }
